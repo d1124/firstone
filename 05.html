@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<title>2017012220</title>
+	<style>
+	#wenjuan div{padding:4px;margin:5px;}
+.text {font-size:14px;color:darkgreen;}
+.text input{font-size:14px;color:red;}
+	</style>
+</head>
+<body>
+	<div id="wenjuan">
+			<h1>调查问卷(填了提交了我也看不见)</h1>
+
+			<div class="text">
+			<lable for="name">姓名：</lable>
+			<input type="text" name="name" id="name">
+			</div>
+
+			<div class="text">
+			<input type="radio" name="sex" value="0"checked>男
+			<input type="radio" name="sex" value="1">女
+			</div>
+
+			<div class="text">
+			<lable for="y">出生日期：年：</lable>
+			<input type="text" name="y" id="y">
+			<lable for="y">月：</lable>
+			<input type="text" name="m" id="m">
+			<lable for="y">日：</lable>
+			<input type="text" name="d" id="d">
+			</div>
+
+			<div class="text">
+			<lable for="地区">所在地区：</lable>
+			<select name="地区">
+					<option value="0">北京</option>
+                    <option value="1">哈尔滨</option>
+					<option value="2">新疆</option>
+					<option value="3">上海</option>
+			</select>
+			</div>
+
+			<div class="text">
+			<lable for="phone">手机：</lable>
+			<input type="text" name="phone" id="phone">
+			</div>
+
+			<div class="text">
+			<lable for="email">电子邮件：</lable>
+			<input type="text" name="email" id="email">
+			</div>
+
+			<div class="text">
+			    <lable for="fav">爱好：</lable>
+				<input type="checkbox" name="fav" value="0" checked>其他
+				<input type="checkbox" name="fav" value="1">运动
+				<input type="checkbox" name="fav" value="2">学习
+                <input type="checkbox" name="fav" value="2">电子游戏
+			</div>
+
+			<div class="text">
+			<lable for="mas">附加信息：</lable>
+			<textarea name="mas"></textarea>
+			</div>
+
+			<div class="text">
+			    <lable for="mail">是否接收网站邮件：</lable>
+				<input type="checkbox" name="mail" value="0" checked>是
+			</div>
+
+			<div>
+				<input type="submit" value="提交" >
+				<input type="reset" value="清空" >
+			</div>
+
+	</div>	
+</body>
+</html>
