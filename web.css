@@ -1,17 +1,18 @@
 /*主页*/
-#header,#content,#footer{width:960px;text-align:center;border:1px black;}
-#header,#footer{background-color:lightblue;}
+#header,#content{width:100%;text-align:center;border:2px solid;}
+/*#header,#footer{background-color:lightblue;}*/
 #header h1{font-size:48px;color:darkblue;}
-#footer{font-size:12px;color:green;}
+#footer{width:100%;text-align:center;font-size:12px;color:green;position:fixed;bottom:0;background-color:lightblue;}
 h1{text-align:center}
-body{background-color:lightgreen;color:darkred;}
+body{color:darkred;}
+#header ul{list-style:none;}
+#header li{width:200px;display:inline-block;}
 /*标题*/
 #er {background-color:white;color:black;}
 /*菜单栏*/
 #he1 a{
     border:1px solid gray;
     display:block;
-	float:left;
 	padding:4px 10px;
 	margin:5px;
 	background-color:yellow;
@@ -23,7 +24,7 @@ body{background-color:lightgreen;color:darkred;}
 	color:white;
 	font-weight:bold
 	}
-/*注销*/
+/*注销
 #logout{display:inline-block;
 float:right;
 	padding:8px 16px;
@@ -34,7 +35,7 @@ float:right;
 #he2{display:inline-block;
 	padding:8px 16px;
 	color:purple;
-	font-size:20px;}
+	font-size:20px;}*/
 /*首页*/
 #shouye p{font-size:48px;}
 /*个人信息*/
