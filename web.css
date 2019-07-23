@@ -1,12 +1,12 @@
 /*主页*/
-#header,#content{width:100%;text-align:center;border:2px solid;}
+#header,#content{width:100%;text-align:center;}
 /*#header,#footer{background-color:lightblue;}*/
 #header h1{font-size:48px;color:darkblue;}
 #footer{width:100%;text-align:center;font-size:12px;color:green;position:fixed;bottom:0;background-color:lightblue;}
 h1{text-align:center}
 body{color:darkred;}
 #header ul{list-style:none;}
-#header li{width:150px;display:inline-block;}
+#header li{width:120px;display:inline-block;}
 /*标题*/
 #er {background-color:white;color:black;}
 /*菜单栏*/
