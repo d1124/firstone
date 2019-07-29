@@ -50,6 +50,7 @@ padding-left:24px;
 #c1,#s1{top:2px;position:absolute;}
 #c1{width:700px;padding:0 100px;}
 #c1 p{font-size:40px;text-align:center;}
+#c1 a{font-size:40px;text-decoration:none;}
 #s1 {width:70px;right:2px;}
 #s1 a{display:block;
 background-color:lightyellow;
