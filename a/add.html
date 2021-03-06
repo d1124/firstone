@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html layout:decorate="~{main}">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+	<script type="text/javascript" src="jquery-1.12.4.js"></script>
+	<script type="text/javascript" src="bootstrap.js"></script>
+	<script type="text/javascript" src="echarts.js"></script>
+	<link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+
+<div>
+    <!--alert预警信息-->
+    <div class="alert alert-warning">
+    <strong>Warning!</strong>
+    <p>1111111111111111111111111111111111111111</p>
+    </div>
+    
+    <div class="container-fluid px-0">
+    <div class="row no-gutters min-vh-100">
+        <div class="col-sm-3 bg-dark flex-grow-1" id="sidebar">
+            <div class="py-2 sticky-top flex-grow-1">
+                <div class="nav flex-sm-column flex-no-wrap align-items-center align-items-sm-start pt-2">
+                    <a href="#" class="text-white nav-link h2">主页</a>
+                    <a href="#" class="text-white nav-link">总览</a>
+                    <a href="#" class="text-white nav-link">数据</a>
+                    <a href="#" class="text-white nav-link">预警</a>
+                    <a href="#" class="text-white nav-link">地图</a>
+                    <a href="#" class="text-white nav-link">历史</a>
+                    <a href="#" class="text-white nav-link">设置</a>
+                </div>
+            </div>
+        </div>
+
+
+        <!--主页内容-->
+        <div class="col p-4" id="main">
+           <div id="t1" style="width: 600px;height:400px;"></div><script src="f.js"></script>
+               <div class="row clearfix">
+        <div class="col-md-4 column">
+            <div>
+                <table border="1" cellpadding="6" cellspacing="0">
+                    <tr>
+                        <th>时间</th>
+                        <td th:each="l:${timelist}"><text th:text="${l}"></text></td>
+                    </tr>
+                    <tr>
+                        <td>氧气浓度</td>
+                        <td th:each="l:${aclist}"><text th:text="${l}"></text></td>
+                    </tr>
+                    <tr>
+                        <td>瓦斯浓度</td>
+                        <td th:each="l2:${wasilist}"><text th:text="${l2}"></text></td>
+                    </tr>
+                    <tr>
+                        <td>其他浓度</td>
+                        <td th:each="l2:${otherlist}"><text th:text="${l2}"></text></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-4 column">
+            <!--风险-->
+            <div>
+                <div>
+                </div>
+                <table border="1" cellpadding="6" cellspacing="0">
+                    <tr>
+                        <th>风险列表</th>
+                        <td th:each="l:${yujinglist}"><text th:text="${l}"></text></td>
+                    </tr>
+                    <tr>
+                        <td>风险系数</td>
+                        <td th:each="l:${xishulist}"><text th:text="${l}"></text></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-4 column">
+            <div> 名称： <text th:text="${dataname2}"></text> 值： <text th:text="${datavalue}">23</text> 时间： <text th:text="${datatime2}"></text>
+            </div>
+        </div>
+    </div>
+    <canvas id="a_canvas" width="500" height="200"></canvas>
+    <div> 氧气列表 <table border="1" cellpadding="6" cellspacing="0">
+            <tr>
+                <th>Id</th>
+                <th>名称</th>
+                <th>值</th>
+                <th>时间</th>
+            </tr>
+            <tr th:each="data:${datalist}">
+                <td th:text="${data.DataId}"></td>
+                <td th:text="${data.getdataname()}"></td>
+                <td th:text="${data.getvalue()}"></td>
+                <td th:text="${data.gettime()}"></td>
+            </tr>
+        </table>
+        <canvas id="a_canvas2" width="800" height="200"></canvas>
+    </div>
+    <div> 温度列表 <table border="1" cellpadding="6" cellspacing="0">
+            <tr>
+                <th>Id</th>
+                <th>名称</th>
+                <th>值</th>
+                <th>时间</th>
+            </tr>
+            <tr th:each="data:${datalist2}">
+                <td th:text="${data.DataId}"></td>
+                <td th:text="${data.getdataname()}"></td>
+                <td th:text="${data.getvalue()}"></td>
+                <td th:text="${data.gettime()}"></td>
+            </tr>
+        </table>
+    </div>
+    <div> 瓦斯列表 <table border="1" cellpadding="6" cellspacing="0">
+            <tr>
+                <th>Id</th>
+                <th>名称</th>
+                <th>值</th>
+                <th>时间</th>
+            </tr>
+            <tr th:each="data:${datalist3}">
+                <td th:text="${data.DataId}"></td>
+                <td th:text="${data.getdataname()}"></td>
+                <td th:text="${data.getvalue()}"></td>
+                <td th:text="${data.gettime()}"></td>
+            </tr>
+        </table>
+    </div>
+    <div> 时间 <table border="1" cellpadding="6" cellspacing="0">
+            <tr>
+                <th>Id</th>
+                <th>名称</th>
+                <th>值</th>
+                <th>时间</th>
+            </tr>
+            <tr th:each="data:${datalist4}">
+                <td th:text="${data.DataId}"></td>
+                <td th:text="${data.getdataname()}"></td>
+                <td th:text="${data.getvalue()}"></td>
+                <td th:text="${data.gettime()}"></td>
+            </tr>
+        </table>
+    </div>
+    <div> 预警 <table border="1" cellpadding="6" cellspacing="0">
+            <tr>
+                <th>风险列表</th>
+                <td th:each="l:${list_y1_name}"><text th:text="${l}"></text></td>
+            </tr>
+            <tr>
+                <td>发生风险</td>
+                <td th:each="l:${list_y1}"><text th:text="${l}"></text></td>
+            </tr>
+        </table>
+    </div>
+         
+ 
+        </div>
+        
+        
+    </div>
+</div>
+    
+
+</div>
+
+</body>
+</html>
