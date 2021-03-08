@@ -12,8 +12,8 @@
 Bmob.initialize("f1cdf3c708bde14d", "981124");
 
 const query = Bmob.Query("Zan");
-query.set("count","7")
-query.set("ID","9")
+query.set("count",7)
+query.set("ID",9)
 query.save()
 .then(res => {console.log(res)})
 .catch(err => {console.log(err)})
