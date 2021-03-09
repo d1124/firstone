@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<script>
+function myFunction(){
+	alert("你好，我是一个警告框！");
+var Bmob = require('Bmob-2.2.5.min.js');
+
+Bmob.initialize("2ba7d49d6cd824c5", "981124");
+
+const query = Bmob.Query("A");
+query.set("D","ddd")
+query.save().then(res => {
+  console.log(res)
+}).catch(err => {
+  console.log(err)
+})
+}
+</script>
+
+</head>
+<body>
+
+<input type="button" onclick="myFunction()" value="显示警告框" />
+
+</body>
+</html>
