@@ -4,18 +4,24 @@
 <meta charset="utf-8">
 <script type="text/javascript" src="Bmob-2.2.5.min.js"></script>
 <script>
-function myFunction(){
-	alert("你好，我是一个警告框！");
-const Bmob = require('./Bmob-2.2.5.min');
-
 Bmob.initialize("2ba7d49d6cd824c5", "981124");
 
-const query = Bmob.Query("A");
-query.set("D","ddd")
-query.save().then(res => {
-  console.log(res)
-}).catch(err => {
-  console.log(err)
+document.getElementById("zan").innerHTML="ff";
+
+function myFunction(){
+//const query = Bmob.Query("A");
+//query.set("D","ddd")
+//query.save().then(res => {
+//  console.log(res)
+//}).catch(err => {
+ // console.log(err)
+//})
+
+const query2 = Bmob.Query('A');
+query2.get('b3bfe32a9f').then(res => {
+    res.increment('E')
+    res.save() 
+	document.getElementById("zan").innerHTML=res['E'];
 })
 }
 </script>
@@ -23,7 +29,15 @@ query.save().then(res => {
 </head>
 <body>
 
-<input type="button" onclick="myFunction()" value="显示警告框" />
+<input type="button" onclick="myFunction()" value="赞" />
+<span>点赞数：</span>
+<span id="zan">null</span>
+<script>
+const query3 = Bmob.Query('A');
+query3.get('b3bfe32a9f').then(res => {
+	document.getElementById("zan").innerHTML=res['E']-1;
+})
+</script>
 
 </body>
 </html>
