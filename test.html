@@ -14,14 +14,26 @@
 
  
 <table class="layui-hide" id="test" lay-filter="test"></table>
-
+<form class="layui-form" action="">
+  <div class="layui-form-item">
+    <label class="layui-form-label">输入内容：</label>
+    <div class="layui-input-block">
+      <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <button class="layui-btn" lay-submit="" lay-filter="demo1">提交</button>
+  </div>
+</form>
 
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
 <script src="layui/layui.js"></script>
 
 <script>
 layui.use('table', function(){
-  var table = layui.table;
+  var table = layui.table
+  ,form = layui.form
+  ;
   Bmob.initialize("f1cdf3c708bde14d", "981124");
 const query = Bmob.Query("Zan");
 
@@ -33,12 +45,12 @@ query.find().then(res => {
 	table.render({
     elem: '#test'
     ,url:'https://d1124.github.io/firstone/1.json'
-    ,toolbar: true
     ,title: '用户数据表'
-    ,totalRow: true
+
     ,cols: [[
-      {field:'ID', title:'ID', width:80, fixed: 'left', unresize: true, sort: true, totalRowText: '合计行'}
-      ,{field:'count', title:'count', width:120, edit: 'text'}
+      {field:'ID', title:'ID', width:80, fixed: 'left', unresize: true,sort: true}
+      ,{field:'count', title:'内容' }
+	  ,{field:'createdAt', title:'创建时间'}
     ]]
     ,page: true
     ,response: {
@@ -56,6 +68,21 @@ query.find().then(res => {
     }
   });
 });
+
+  form.on('submit(demo1)', function(data){
+
+const query = Bmob.Query('Zan');
+query.set("count",data.field.title)
+query.save().then(res => {
+  console.log(res)
+  location.reload();
+//window.location.replace("https://d1124.github.io/firstone/test.html")
+}).catch(err => {
+  console.log(err)
+})
+  });
+
+
 
 });
 </script>
