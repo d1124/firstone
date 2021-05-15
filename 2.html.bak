@@ -75,8 +75,8 @@ const query = Bmob.Query('Zan');
 query.set("count",data.field.title)
 query.save().then(res => {
   console.log(res)
-  location.reload();
-//window.location.replace("https://d1124.github.io/firstone/test.html")
+  //location.reload();
+window.location.replace("https://d1124.github.io/firstone/2.html")
 }).catch(err => {
   console.log(err)
 })
