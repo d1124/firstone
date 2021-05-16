@@ -36,7 +36,7 @@ layui.use('table', function(){
   ;
   Bmob.initialize("f1cdf3c708bde14d", "981124");
 const query = Bmob.Query("Zan");
-
+query.order("ID");
 query.find().then(res => {
     console.log(res.length)
 	var data=res;
@@ -75,8 +75,8 @@ const query = Bmob.Query('Zan');
 query.set("count",data.field.title)
 query.save().then(res => {
   console.log(res)
-  //location.reload();
-window.location.replace("https://d1124.github.io/firstone/2.html")
+  location.reload();
+//window.location.replace("https://d1124.github.io/firstone/test.html")
 }).catch(err => {
   console.log(err)
 })

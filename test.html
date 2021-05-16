@@ -36,7 +36,7 @@ layui.use('table', function(){
   ;
   Bmob.initialize("f1cdf3c708bde14d", "981124");
 const query = Bmob.Query("Zan");
-
+query.order("-ID");
 query.find().then(res => {
     console.log(res.length)
 	var data=res;
