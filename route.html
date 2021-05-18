@@ -144,8 +144,23 @@ util.event('lay-demoTransferActive', {
 //处理属性 为 lay-active 的所有元素事件
 util.event('lay-active', {
   e1: function(){
-    layer.msg('触发了事件1');
+    layer.msg('初始化地区');
+    const queryArray = new Array();
+for(var i = 0 ; i < 3 ; i++){
+  var queryObj = Bmob.Query('Data');
+  queryObj.set('place','abc' + i);
+  queryObj.set('Date','2021-05-18');
+  queryObj.set('classname','早');
+  queryArray.push(queryObj);
+}
 
+
+// 传入刚刚构造的数组
+Bmob.Query('Data').saveAll(queryArray).then(result => {
+  console.log(result);
+}).catch(err => {
+  console.log(err);
+});
 
 
 
