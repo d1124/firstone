@@ -233,6 +233,7 @@ Bmob.Query('Data').saveAll(queryArray).then(result => {
     // var Data1=JSON.stringify(getData);
 
     const queryArray = new Array();
+    // const IDArray = new Array();
     for(var i = 0 ; i < getData.length ; i++){
     var place=getData[i]["title"].slice(0,-3);
     var time=getData[i]["value"].slice(0,1);
@@ -250,14 +251,31 @@ Bmob.Query('Data').saveAll(queryArray).then(result => {
     queryObj.set('timenum',time);
     queryObj.set('DataID',Id);
     queryArray.push(queryObj);
+    // IDArray.push(Id);
   }
-
+  // console.log(IDArray);
    // console.log(queryArray);
     // str.slice(0,-3);
     // layer.alert(str.slice(0,-3));
     // layer.alert(time.slice(0,1)+"-"+place.slice(0,-3)+getData.length);
 
     Bmob.Query('Task').saveAll(queryArray).then(result => {
+      const IDArray = new Array();
+      console.log(result);
+      for(var i = 0 ; i < result.length ; i++){
+        IDArray.push(result[i]["success"]["objectId"]);
+
+      }
+
+      const relation = Bmob.Relation('Task') // 需要关联的表
+      const relID = relation.add(IDArray) //关联表中需要关联的objectId, 返回一个Relation对象, add方法接受string和array的类型参数
+
+      const query = Bmob.Query('route')
+      query.get('8dDN4446').then(res => {
+        res.set('tasklist',relID); // 将Relation对象保存到two字段中，即实现了一对多的关联
+        res.save();
+      })
+
     }).catch(err => {
       console.log(err);
     });
@@ -265,6 +283,9 @@ Bmob.Query('Data').saveAll(queryArray).then(result => {
   }
   ,e3: function(){
     layer.msg('触发了事件3');
+
+
+
   }
 });
 

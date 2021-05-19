@@ -117,22 +117,22 @@ query.find().then(res => {
       ,{ field:'tantou',title:'探头(CH4\%)'}
       ,{ field:'time',title:'时间(h.min)'}
      ,{ field:'fireboss',title:'瓦检员', rowspan: 2}
-    ,{field:'null2',title:'CH4',templet: function(d){if(d.time2.CH4!=null)return d.time2.CH4;return ''}}
-      ,{ field:'null2',title:'CO2',templet: function(d){if(d.time2.CO2!=null)return d.time2.CO2;return ''}}
-      ,{ field:'CO',title:'CO',templet: function(d){if(d.time2.CO!=null)return d.time2.CO;return ''}}
-      ,{ field:'O2',title:'O2',templet: function(d){if(d.time2.O2!=null)return d.time2.O2;return ''}}
-      ,{ field:'T',title:'温度',templet: function(d){if(d.time2.T!=null)return d.time2.T;return ''}}
-      ,{ field:'tantou',title:'探头',templet: function(d){if(d.time2.tantou!=null)return d.time2.tantou;return ''}}
-      ,{ field:'time',title:'时间(h.min)',templet: function(d){if(d.time2.time!=null)return d.time2.time;return ''}}
-      ,{ field:'fireboss',title:'瓦检员', rowspan: 2,templet: function(d){if(d.time2.fireboss!=null)return d.time2.fireboss;return ''}},
-      {field:'null2',title:'CH4',templet: function(d){if(d.time3.CH4!=null)return d.time3.CH4;return ''}}
-        ,{ field:'null2',title:'CO2',templet: function(d){if(d.time3.CO2!=null)return d.time3.CO2;return ''}}
-        ,{ field:'CO',title:'CO',templet: function(d){if(d.time3.CO!=null)return d.time3.CO;return ''}}
-        ,{ field:'O2',title:'O2',templet: function(d){if(d.time3.O2!=null)return d.time3.O2;return ''}}
-        ,{ field:'T',title:'温度',templet: function(d){if(d.time3.T!=null)return d.time3.T;return ''}}
-        ,{ field:'tantou',title:'探头',templet: function(d){if(d.time3.tantou!=null)return d.time3.tantou;return ''}}
-        ,{ field:'time',title:'时间(h.min)',templet: function(d){if(d.time3.time!=null)return d.time3.time;return ''}}
-        ,{ field:'fireboss',title:'瓦检员', rowspan: 2,templet: function(d){if(d.time3.fireboss!=null)return d.time3.fireboss;return ''}},
+    ,{field:'null2',title:'CH4',templet: function(d){if(d.time2!=null)return d.time2.CH4;return ''}}
+      ,{ field:'null2',title:'CO2',templet: function(d){if(d.time2!=null)return d.time2.CO2;return ''}}
+      ,{ field:'CO',title:'CO',templet: function(d){if(d.time2!=null)return d.time2.CO;return ''}}
+      ,{ field:'O2',title:'O2',templet: function(d){if(d.time2!=null)return d.time2.O2;return ''}}
+      ,{ field:'T',title:'温度',templet: function(d){if(d.time2!=null)return d.time2.T;return ''}}
+      ,{ field:'tantou',title:'探头',templet: function(d){if(d.time2u!=null)return d.time2.tantou;return ''}}
+      ,{ field:'time',title:'时间(h.min)',templet: function(d){if(d.time2!=null)return d.time2.time;return ''}}
+      ,{ field:'fireboss',title:'瓦检员', rowspan: 2,templet: function(d){if(d.time2!=null)return d.time2.fireboss;return ''}},
+      {field:'null2',title:'CH4',templet: function(d){if(d.time3!=null)return d.time3.CH4;return ''}}
+        ,{ field:'null2',title:'CO2',templet: function(d){if(d.time3!=null)return d.time3.CO2;return ''}}
+        ,{ field:'CO',title:'CO',templet: function(d){if(d.time3!=null)return d.time3.CO;return ''}}
+        ,{ field:'O2',title:'O2',templet: function(d){if(d.time3!=null)return d.time3.O2;return ''}}
+        ,{ field:'T',title:'温度',templet: function(d){if(d.time3!=null)return d.time3.T;return ''}}
+        ,{ field:'tantou',title:'探头',templet: function(d){if(d.time3!=null)return d.time3.tantou;return ''}}
+        ,{ field:'time',title:'时间(h.min)',templet: function(d){if(d.time3!=null)return d.time3.time;return ''}}
+        ,{ field:'fireboss',title:'瓦检员', rowspan: 2,templet: function(d){if(d.time3!=null)return d.time3.fireboss;return ''}},
     ]
     ]
       ,page: true
