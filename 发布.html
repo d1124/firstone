@@ -16,9 +16,9 @@
     <legend>批量处理事件</legend>
   </fieldset>
   <div class="layui-btn-container">
-    <button class="layui-btn" lay-active="e1">初始化地区和三个班</button>
-    <button class="layui-btn" lay-active="e2">初始化路线</button>
-    <button class="layui-btn" lay-active="e3">路线和地区结合</button>
+    <button class="layui-btn" lay-active="e1">发布</button>
+    <button class="layui-btn" lay-active="e2">2</button>
+    <button class="layui-btn" lay-active="e3">3</button>
   </div>
 
   <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
@@ -53,6 +53,7 @@ layui.use(['transfer', 'layer', 'util'], function(){
 
 // Bmob.initialize("2ba7d49d6cd824c5", "981124");
 Bmob.initialize("f1cdf3c708bde14d", "981124");
+//地点及时间对应列表
 var data1 = [
 {"value": "1001", "title": "李白","time":"1"}
 ,{"value": "2001", "title": "李白","time":"2"}
@@ -66,6 +67,7 @@ var data1 = [
 ,{"value": "2008", "title": "地点二","time":"2"}
 ,{"value": "3009", "title": "地点二","time":"3"}
 ]
+//初始化地点列表
 var placelist=["地点一","地点二","地点三","李白","地点四","地点五"]
 //实例调用
 transfer.render({
@@ -128,10 +130,10 @@ function selectlist(place,date,classtime){
   queryObj.set('classtime',classtime);
   return queryObj;
 }
-
+window.list= new Array();
 function initline(getDataRes,array,classname,date,classtime){
   var getData = transfer.getData(getDataRes);
-  const TaskArray = new Array();
+  // const TaskArray = new Array();
   for(var i = 0 ; i < getData.length ; i++){
   var place=getData[i]["title"].slice(0,-3);
   var time=getData[i]["value"].slice(0,1);
@@ -142,24 +144,32 @@ function initline(getDataRes,array,classname,date,classtime){
   queryObj.set('placename',place);
   queryObj.set('timenum',time);
   queryObj.set('DataID',Id);
-  TaskArray.push(queryObj);
+
+  queryObj.set('Date',date);
+  queryObj.set('classname',classname);
+  queryObj.set('classtime',classtime);
+
+  // TaskArray.push(queryObj);
+  list.push(queryObj);
   }
-  Bmob.Query('TaskData').saveAll(TaskArray).then(result => {
-    const IDArray = new Array();
-    for(var i = 0 ; i < result.length ; i++){
-      IDArray.push(result[i]["success"]["objectId"]);
-    }
-    const relation = Bmob.Relation('TaskData')
-    const relID = relation.add(IDArray)
-    const lineObj = Bmob.Query('line');
-    lineObj.set('classname',classname);
-    lineObj.set('classtime',classtime);
-    lineObj.set('Date',date);
-    lineObj.set('taskdatalist',relID);
-    lineObj.save().then(res => {console.log(res)}).catch(err => {console.log(err)})
+  // Bmob.Query('TaskData').saveAll(TaskArray).then(result => {
+  //   // const IDArray = new Array();
+  //   // for(var i = 0 ; i < result.length ; i++){
+  //   //   IDArray.push(result[i]["success"]["objectId"]);
+  //   // }
+  //   // const relation = Bmob.Relation('TaskData')
+  //   // const relID = relation.add(IDArray)
+  //   // const lineObj = Bmob.Query('line');
+  //   // // lineObj.set('classname',classname);
+  //   // // lineObj.set('classtime',classtime);
+  //   // lineObj.set('Date',date);
+  //   // lineObj.set('taskdatalist',relID);
+  //   // lineObj.save().then(res => {console.log(res)}).catch(err => {console.log(err)})
+  //
+  // }).catch(err => {console.log(err);});
+  // console.log(TaskArray);
 
-  }).catch(err => {console.log(err);});
-
+  // return TaskArray;
 }
 
 
@@ -192,6 +202,11 @@ util.event('lay-active', {
       initline('key3',Array3,'C','2021-05-19','早');
       initline('key3',Array3,'C','2021-05-19','中');
       initline('key3',Array3,'C','2021-05-19','晚');
+
+      Bmob.Query('TaskData').saveAll(list).then(result => {
+        list= new Array();
+      }).catch(err => {console.log(err);});
+
     }).catch(err => {console.log(err);});
   }
   ,e2: function(){
