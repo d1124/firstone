@@ -54,7 +54,7 @@ layui.use('table', function(){
   form.on('submit(demo1)', function(data1){
     const query = Bmob.Query('select');
     query.equalTo("Date","==", data1.field.date);
-    query.equalTo("classname","==", data1.field.classtime);
+    query.equalTo("classtime","==", data1.field.class);
     query.include('time1','time2','time3');
     query.find().then(res => {
         data=res;
