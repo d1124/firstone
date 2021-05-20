@@ -68,7 +68,8 @@ var data1 = [
 ,{"value": "3009", "title": "地点二","time":"3"}
 ]
 //初始化地点列表
-var placelist=["地点一","地点二","地点三","李白","地点四","地点五"]
+// var placelist=["地点一","地点二","地点三","李白","地点四","地点五"]
+ var placelist=["地点一","李白","地点四"]
 //实例调用
 transfer.render({
   elem: '#test7'
@@ -138,8 +139,8 @@ function initline(getDataRes,array,classname,date,classtime){
   var place=getData[i]["title"].slice(0,-3);
   var time=getData[i]["value"].slice(0,1);
   var queryData = array.filter(function (data) {return data.place == place});
-  var queryData2=queryData.filter(function (data) {return data.classname == classtime});
-  var Id=queryData[0]["Id"];
+  var queryData2=queryData.filter(function (data) {return data.time == classtime});
+  var Id=queryData2[0]["Id"];
   var queryObj = Bmob.Query('TaskData');
   queryObj.set('placename',place);
   queryObj.set('timenum',time);
@@ -189,7 +190,7 @@ util.event('lay-active', {
       for(var i = 0 ; i < result.length ; i++){
         var Obj=new Object();
         Obj.place=queryArray[i]["setData"]["place"];
-        Obj.time=queryArray[i]["setData"]["classname"];
+        Obj.time=queryArray[i]["setData"]["classtime"];
         Obj.Id=result[i]["success"]["objectId"];
         Array3.push(Obj);
       }
@@ -204,6 +205,39 @@ util.event('lay-active', {
       initline('key3',Array3,'C','2021-05-19','晚');
 
       Bmob.Query('TaskData').saveAll(list).then(result => {
+        window.Array4= new Array();
+        for(var i = 0 ; i < result.length ; i++){
+          var Obj=new Object();
+          Obj.DataId=list[i]["setData"]["DataID"];
+          Obj.timenum=list[i]["setData"]["timenum"];
+          Obj.Id=result[i]["success"]["objectId"];
+          Array4.push(Obj);
+        }
+        for(var i = 0 ; i < Array4.length ; i++){
+        const query = Bmob.Query('select');
+        const pointer = Bmob.Pointer('TaskData')//pointer指向
+        const poiID = pointer.set(Array4[i]["Id"])//指向行
+        if(Array4[i]["timenum"]=== "1"){
+          query.get(Array4[i]["DataId"]).then(res => {
+          res.set('time1',poiID);
+          res.save()
+          }).catch(err => {console.log(err)})
+          }
+        if(Array4[i]["timenum"]=== "2"){
+          query.get(Array4[i]["DataId"]).then(res => {
+          res.set('time2',poiID);
+          res.save()
+          }).catch(err => {console.log(err)})
+          }
+        if(Array4[i]["timenum"]=== "3"){
+          query.get(Array4[i]["DataId"]).then(res => {
+          res.set('time3',poiID);
+          res.save()
+          }).catch(err => {console.log(err)})
+          }
+
+        }
+
         list= new Array();
       }).catch(err => {console.log(err);});
 
