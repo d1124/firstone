@@ -102,7 +102,7 @@ var data1 = [
 ]
 //初始化地点列表
 // var placelist=["地点一","地点二","地点三","李白","地点四","地点五"]
- var placelist=["地点一","地点四","地点六","地点五","地点三","地点二"]
+ // var placelist=["地点一","地点四","地点六","地点五","地点三","地点二"]
 //实例调用
 transfer.render({
   elem: '#test7'
@@ -255,7 +255,9 @@ if(h2<10)hy="0"+h+data1.field.time.slice(2,5);
 hz=h3+data1.field.time.slice(2,5);
 // if(h3>24)hy="0"+h+data1.field.time.slice(2,5);
 // console.log(hx+hy+hz);
-
+var getData1 = transfer.getData('key1');
+var placelist= new Array();
+for(var i = 0 ; i < getData1.length ; i++)placelist.push(getData1[i]["title"].slice(0,-4));
 layer.msg('初始化地区');
 // transfer.getData('');
 

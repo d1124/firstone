@@ -53,10 +53,10 @@ layui.use('table', function(){
   });
 
 var typelist=[
-  {"place":"地点一","type":"采煤"}
-,{"place":"地点四","type":"掘进"}
-,{"place":"地点六","type":"硐室"}
-,{"place":"地点七","type":"其他"}
+  {"title":"地点一","type":"采煤"}
+,{"title":"地点四","type":"掘进"}
+,{"title":"地点六","type":"硐室"}
+,{"title":"地点七","type":"其他"}
 ]
 
   form.on('submit(demo1)', function(data1){
@@ -73,7 +73,7 @@ var typelist=[
 
 
         var place = Arrayplace.filter(function (data) {return data.placename == res[i]["placename"]});
-        var tp=typelist.filter(function (data) {return data.place == res[i]["placename"]});
+        var tp=typelist.filter(function (data) {return data.title == res[i]["placename"]});
         // console.log(tp)
         if(place.length<1){
         var place_CH4=new Object();

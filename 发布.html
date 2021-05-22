@@ -90,20 +90,20 @@ Bmob.initialize("f1cdf3c708bde14d", "981124");
 var data1 = [
 // {"value": "1001", "title": "地点六","time":"1"}
 // ,{"value": "2001", "title": "地点六","time":"2"}
-{"value": "3001", "title": "地点六","time":"3"}
-,{"value": "1002", "title": "地点四","time":"1"}
-,{"value": "1003", "title": "地点五","time":"1"}
+{"value": "3地点六", "title": "地点六","time":"3","type":"采煤"}
+,{"value": "1地点四", "title": "地点四","time":"1","type":"采煤"}
+,{"value": "1地点五", "title": "地点五","time":"1","type":"采煤"}
 // ,{"value": "1004", "title": "地点二","time":"1"}
 // ,{"value": "1005", "title": "地点三","time":"1"}
-,{"value": "2005", "title": "地点三","time":"2"}
+,{"value": "2地点三", "title": "地点三","time":"2","type":"采煤"}
 // ,{"value": "1006", "title": "地点一","time":"1"}
-,{"value": "2007", "title": "地点一","time":"2"}
+,{"value": "2地点一", "title": "地点一","time":"2","type":"采煤"}
 // ,{"value": "2008", "title": "地点二","time":"2"}
-,{"value": "3009", "title": "地点二","time":"3"}
+,{"value": "3地点二", "title": "地点二","time":"3","type":"采煤"}
 ]
 //初始化地点列表
 // var placelist=["地点一","地点二","地点三","李白","地点四","地点五"]
- var placelist=["地点一","地点四","地点六","地点五","地点三","地点二"]
+ // var placelist=["地点一","地点四","地点六","地点五","地点三","地点二"]
 //实例调用
 transfer.render({
   elem: '#test7'
@@ -119,7 +119,7 @@ transfer.render({
 }
   ,title: ['全部地点', 'A班选中地点']
   ,id: 'key1' //定义唯一索引
-  ,value: ["3001"]
+  ,value: ["3地点六"]
 })
 
 transfer.render({
@@ -136,7 +136,7 @@ transfer.render({
 }
   ,title: ['全部地点', 'B班选中地点']
   ,id: 'key2' //定义唯一索引
-  ,value: ["1002"]
+  ,value: ["1地点五"]
 })
 
 
@@ -154,7 +154,7 @@ transfer.render({
 }
   ,title: ['全部地点', 'C班选中地点']
   ,id: 'key3' //定义唯一索引
-  ,value: ["2007"]
+  ,value: ["2地点一"]
 })
 
 
@@ -288,7 +288,13 @@ if(h2<10)hy="0"+h+data1.field.time.slice(2,5);
 hz=h3+data1.field.time.slice(2,5);
 // if(h3>24)hy="0"+h+data1.field.time.slice(2,5);
 // console.log(hx+hy+hz);
-
+var getData1 = transfer.getData('key1');
+var getData2 = transfer.getData('key2');
+var getData3 = transfer.getData('key3');
+var placelist= new Array();
+for(var i = 0 ; i < getData1.length ; i++)placelist.push(getData1[i]["title"].slice(0,-4));
+for(var i = 0 ; i < getData2.length ; i++)placelist.push(getData2[i]["title"].slice(0,-4));
+for(var i = 0 ; i < getData3.length ; i++)placelist.push(getData3[i]["title"].slice(0,-4));
 layer.msg('初始化地区');
 // transfer.getData('');
 
