@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <title>班报</title>
+  <title>日报</title>
   <link rel="stylesheet" href="layui/css/layui.css">
 <script src="Bmob-2.2.5.min.js"></script>
 </head>
@@ -51,6 +51,14 @@ layui.use('table', function(){
   laydate.render({
     elem: '#date'
   });
+
+var typelist=[
+  {"place":"地点一","type":"采煤"}
+,{"place":"地点四","type":"掘进"}
+,{"place":"地点六","type":"硐室"}
+,{"place":"地点七","type":"其他"}
+]
+
   form.on('submit(demo1)', function(data1){
     const query = Bmob.Query('TaskData');
     query.equalTo("Date","==", data1.field.date);
@@ -58,16 +66,85 @@ layui.use('table', function(){
     // query.equalTo("classtime","==", data1.field.class);
     // query.include('time1','time2','time3');
     query.find().then(res => {
-      
-      // window.Array4= new Array();
-      // for(var i = 0 ; i < res.length ; i++){
-      //   var Obj=new Object();
-      //   Obj.placename=list[i]["placename"];
-      //   Obj.ch4=list[i]["_maxCH4"];
-      //   Array4.push(Obj);
-      // }
-        data=res;
-        console.log(res)
+
+      const Array3= new Array();
+      const Arrayplace= new Array();
+      for(var i = 0 ; i < res.length ; i++){
+
+
+        var place = Arrayplace.filter(function (data) {return data.placename == res[i]["placename"]});
+        var tp=typelist.filter(function (data) {return data.place == res[i]["placename"]});
+        // console.log(tp)
+        if(place.length<1){
+        var place_CH4=new Object();
+        place_CH4.placename=res[i]["placename"];
+        place_CH4.CH4=res[i]["CH4"];
+        // Arrayplace.push(place_CH4);
+
+        var Obj=new Object();
+        Obj.placename=res[i]["placename"];
+        Obj.type=tp[0].type;
+        Obj.CH4=res[i]["CH4"];
+        Obj.CO2=res[i]["CO2"];
+        Obj.CO=res[i]["CO"];
+        Obj.O2=res[i]["O2"];
+        Obj.time=res[i]["time"];
+        Obj.tantou=res[i]["tantou"];
+        Obj.fireboss=res[i]["fireboss"];
+        Arrayplace.push(Obj);
+
+      }
+
+        else if(parseFloat(place.CH4)<=parseFloat(res[i]["CH4"])){
+          Arrayplace.remove(place);
+          // Array3.remove();
+          // var place_CH4=new Object();
+          // place_CH4.placename=res[i]["placename"];
+          // place_CH4.CH4=res[i]["CH4"];
+          // Arrayplace.push(place_CH4);
+
+          var Obj=new Object();
+          Obj.placename=res[i]["placename"];
+          Obj.type=tp[0].type;
+          Obj.CH4=res[i]["CH4"];
+          Obj.CO2=res[i]["CO2"];
+          Obj.CO=res[i]["CO"];
+          Obj.O2=res[i]["O2"];
+          Obj.time=res[i]["time"];
+          Obj.tantou=res[i]["tantou"];
+          Obj.fireboss=res[i]["fireboss"];
+          Arrayplace.push(Obj);
+          continue;
+        }
+        // console.log(place)
+        // var thisCH4=place.filter(function (data) {return data.placename == });
+        //
+        // if(place.length<1){
+        // var place_CH4=new Object();
+        // place_CH4.placename=res[i]["placename"];
+        // place_CH4.CH4=res[i]["CH4"];
+        // Arrayplace.push(place_CH4);}
+        // console.log(Arrayplace)
+        // var queryData = Arrayplace.filter(function (data) {return data.place == place});
+        // if(queryData.length==0)
+
+
+        // var Obj=new Object();
+        // Obj.placename=res[i]["placename"];
+        // Obj.CH4=res[i]["CH4"];
+        // Obj.CO2=res[i]["CO2"];
+        // Obj.CO=res[i]["CO"];
+        // Obj.O2=res[i]["O2"];
+        // Obj.time=res[i]["time"];
+        // Obj.tantou=res[i]["tantou"];
+        // Obj.fireboss=res[i]["fireboss"];
+        // Array3.push(Obj);
+      }
+console.log(Arrayplace)
+
+        // data=res;
+        data=Arrayplace
+        // console.log(res)
         table.render({
           elem: '#test'
           ,url:'https://d1124.github.io/firstone/1.json'
@@ -75,15 +152,15 @@ layui.use('table', function(){
           ,toolbar: '#toolbarDemo'
           ,cols: [
             [
-            {field:'placename', title:'地点',unresize:true},
-             {field:'CH4',title:'CH4',templet: function(d){if(d._maxCH4!=null)return d._maxCH4;return ''}}
-            ,{title:'CO2',templet: function(d){if(d.time1!=null)if(d.time1.CO2!=null)return d.time1.CO2;return ''}}
-            ,{title:'CO',templet: function(d){if(d.time1!=null)if(d.time1.CO!=null)return d.time1.CO;return ''}}
-            ,{title:'O2',templet: function(d){if(d.time1!=null)if(d.time1.O2!=null)return d.time1.O2;return ''}}
-            ,{title:'温度',templet: function(d){if(d.time1!=null)if(d.time1.T!=null)return d.time1.T;return ''}}
-            ,{title:'探头',templet: function(d){if(d.time1!=null)if(d.time1.tantou!=null)return d.time1.tantou;return ''}}
-            ,{title:'时间(h.min)',templet: function(d){if(d.time1!=null)if(d.time1.time!=null)return d.time1.time;return ''}}
-            ,{title:'瓦检员',templet: function(d){if(d.time1!=null)if(d.time1.fireboss!=null)return d.time1.fireboss;return ''}}
+              {field:'placename', title:'地点',unresize:true, sort: true}
+              ,{field:'type', title:'地点类型',unresize:true, sort: true}
+               ,{field:'CH4',title:'CH4',edit: 'text', sort: true}
+               ,{field:'CO2',title:'CO2',edit: 'text', sort: true}
+               ,{field:'CO',title:'CO',edit: 'text', sort: true}
+               ,{field:'T',title:'温度',edit: 'text', sort: true}
+               ,{field:'tantou',title:'探头',edit: 'text', sort: true}
+               ,{field:'time',title:'时间(h.min)',edit: 'text', sort: true}
+               ,{field:'fireboss',title:'瓦检员',edit: 'text', sort: true}
             ]
             ]
           ,page: true
