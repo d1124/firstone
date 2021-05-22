@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>主界面</title>
+  <link rel="stylesheet" href="layui/css/layui.css">
+
+    <script src="jquery-1.12.4.js"></script>
+<script src="Bmob-2.2.5.min.js"></script>
+</head>
+<body>
+
+
+  <ul class="layui-nav" lay-filter="">
+    <li class="layui-nav-item"><a href="发布.html">发布</a></li>
+    <li class="layui-nav-item layui-this"><a href="发布单条路径.html">发布单条路径</a></li>
+    <li class="layui-nav-item"><a href="用户列表.html">用户列表</a></li>
+    <li class="layui-nav-item">
+      <a href="javascript:;">数据</a>
+      <dl class="layui-nav-child"> <!-- 二级菜单 -->
+        <dd><a href="日报.html">日报</a></dd>
+        <dd><a href="班报.html">班报</a></dd>
+        <dd><a href="用户列表.html">用户列表</a></dd>
+      </dl>
+    </li>
+    <li class="layui-nav-item"><a href="">其他</a></li>
+  </ul>
+
+<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
+<script src="layui/layui.js"></script>
+
+<script>
+//注意：导航 依赖 element 模块，否则无法进行功能性操作
+layui.use('element', function(){
+  var element = layui.element;
+
+  //…
+});
+</script>
+</body>
+</html>

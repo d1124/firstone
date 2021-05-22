@@ -14,19 +14,12 @@
     <legend>选择时间</legend>
   </fieldset> -->
 
-  <form class="layui-form" action="">
-    <div class="layui-form-item">
-      <div class="layui-input-block">
-        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">获取用户表</button>
-      </div>
-    </div>
-  </form>
 
   <form class="layui-form" action="">
 
     <div class="layui-form-item">
   <label class="layui-form-label">用户名</label>
-  <div class="layui-input-block">
+  <div class="layui-input-inline">
     <input type="text" name="username" required  lay-verify="required" placeholder="请输入用户名" autocomplete="off" class="layui-input">
   </div>
 </div>
@@ -35,7 +28,7 @@
   <div class="layui-input-inline">
     <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
   </div>
-  <div class="layui-form-mid layui-word-aux">添加</div>
+  <div class="layui-form-mid layui-word-aux">请记住密码（密码无法被查到或修改）</div>
 </div>
     <div class="layui-form-item">
       <div class="layui-input-block">
@@ -58,62 +51,61 @@ layui.use('table', function(){
   laydate.render({
     elem: '#date'
   });
-  form.on('submit(demo1)', function(data1){
-    const query = Bmob.Query('_User');
-    // query.equalTo("Date","==", data1.field.date);
-    // query.statTo("groupby", "placename");
-    // query.equalTo("classtime","==", data1.field.class);
-    // query.include('time1','time2','time3');
-    query.find().then(res => {
 
-      // window.Array4= new Array();
-      // for(var i = 0 ; i < res.length ; i++){
-      //   var Obj=new Object();
-      //   Obj.placename=list[i]["placename"];
-      //   Obj.ch4=list[i]["_maxCH4"];
-      //   Array4.push(Obj);
-      // }
-        data=res;
-        console.log(res)
-        table.render({
-          elem: '#test'
-          ,url:'https://d1124.github.io/firstone/1.json'
-          ,title: '用户表'
-          ,toolbar: '#toolbarDemo'
-          ,cols: [
-            [
-              {field:'objectId',title:'ID'}
-            ,{field:'username', title:'用户名',unresize:true,edit: 'text'}
-            ,{field:'password',title:'密码'}
-            ,{field:'lastdate',title:'检查日期',edit: 'text'}
-            ,{field:'classname',title:'路线',edit: 'text'}
-             ,{field:'classtime',title:'班次',edit: 'text'}
-             ,{field:'name',title:'姓名',edit: 'text'}
-             ,{field:'role',title:'角色',edit: 'text'}
-             // ,{field:'T',title:'温度'}
-             // ,{field:'tantou',title:'探头'}
-             // ,{field:'time',title:'时间(h.min)'}
-             // ,{field:'fireboss',title:'瓦检员'}
-            ]
-            ]
-          ,page: true
-          ,response: {
-            statusCode: 200
-          }
-          ,parseData: function(res){
-            return {
-              "code": res.status,
-              "msg": data.length,
-              "count": data.length,
-              "data": data
-            };
-          }
-        });
-      }).catch(err => {
-        // console.log(err)
-      })
-    return false;
-  });
+
+  const query = Bmob.Query('_User');
+  // query.equalTo("Date","==", data1.field.date);
+  // query.statTo("groupby", "placename");
+  // query.equalTo("classtime","==", data1.field.class);
+  // query.include('time1','time2','time3');
+  query.find().then(res => {
+
+    // window.Array4= new Array();
+    // for(var i = 0 ; i < res.length ; i++){
+    //   var Obj=new Object();
+    //   Obj.placename=list[i]["placename"];
+    //   Obj.ch4=list[i]["_maxCH4"];
+    //   Array4.push(Obj);
+    // }
+      data=res;
+      console.log(res)
+      table.render({
+        elem: '#test'
+        ,url:'https://d1124.github.io/firstone/1.json'
+        ,title: '用户表'
+        ,toolbar: '#toolbarDemo'
+        ,cols: [
+          [
+            {field:'objectId',title:'ID'}
+          ,{field:'username', title:'用户名',unresize:true,edit: 'text'}
+          // ,{field:'password',title:'密码'}
+          ,{field:'lastdate',title:'检查日期',edit: 'text'}
+          ,{field:'classname',title:'路线',edit: 'text'}
+           ,{field:'classtime',title:'班次',edit: 'text'}
+           ,{field:'name',title:'姓名',edit: 'text'}
+           ,{field:'role',title:'角色',edit: 'text'}
+           // ,{field:'T',title:'温度'}
+           // ,{field:'tantou',title:'探头'}
+           // ,{field:'time',title:'时间(h.min)'}
+           // ,{field:'fireboss',title:'瓦检员'}
+          ]
+          ]
+        ,page: true
+        ,response: {
+          statusCode: 200
+        }
+        ,parseData: function(res){
+          return {
+            "code": res.status,
+            "msg": data.length,
+            "count": data.length,
+            "data": data
+          };
+        }
+      });
+    }).catch(err => {
+      // console.log(err)
+    })
 
   //监听单元格编辑
   table.on('edit(test)', function(obj){
@@ -138,14 +130,14 @@ form.on('submit(demo2)', function(data2){
 let params = {
     username: data2.field.username,
     password: data2.field.password,
-    // email: 'bmob2018@bmob.cn',
-    // phone: '13711166567',
 }
 Bmob.User.register(params).then(res => {
   console.log(res)
 }).catch(err => {
  console.log(err)
 });
+location.reload();
+
 return false;
 })
 });
