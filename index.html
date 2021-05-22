@@ -14,19 +14,21 @@
 
 
   <ul class="layui-nav" lay-filter="">
-    <li class="layui-nav-item"><a href="发布.html">发布</a></li>
-    <li class="layui-nav-item layui-this"><a href="发布单条路径.html">发布单条路径</a></li>
-    <li class="layui-nav-item"><a href="用户列表.html">用户列表</a></li>
+    <li class="layui-nav-item layui-this"><a href="发布.html" target="iframe_a">发布</a></li>
+    <li class="layui-nav-item"><a href="发布单条路径.html" target="iframe_a">发布单条路径</a></li>
+    <li class="layui-nav-item"><a href="用户列表.html" target="iframe_a">用户列表</a></li>
     <li class="layui-nav-item">
       <a href="javascript:;">数据</a>
       <dl class="layui-nav-child"> <!-- 二级菜单 -->
-        <dd><a href="日报.html">日报</a></dd>
-        <dd><a href="班报.html">班报</a></dd>
-        <dd><a href="用户列表.html">用户列表</a></dd>
+        <dd><a href="日报.html" target="iframe_a">日报</a></dd>
+        <dd><a href="班报.html" target="iframe_a">班报</a></dd>
+        <dd><a href="用户列表.html" target="iframe_a">用户列表</a></dd>
       </dl>
     </li>
     <li class="layui-nav-item"><a href="">其他</a></li>
   </ul>
+
+<iframe src="发布.html" name="iframe_a" width="1700" height="1700"></iframe>
 
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
 <script src="layui/layui.js"></script>

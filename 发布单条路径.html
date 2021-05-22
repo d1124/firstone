@@ -89,16 +89,16 @@ Bmob.initialize("f1cdf3c708bde14d", "981124");
 var data1 = [
 // {"value": "1001", "title": "地点六","time":"1"}
 // ,{"value": "2001", "title": "地点六","time":"2"}
-{"value": "3001", "title": "地点六","time":"3"}
-,{"value": "1002", "title": "地点四","time":"1"}
-,{"value": "1003", "title": "地点五","time":"1"}
+{"value": "3地点六", "title": "地点六","time":"3","type":"采煤"}
+,{"value": "1地点四", "title": "地点四","time":"1","type":"采煤"}
+,{"value": "1地点五", "title": "地点五","time":"1","type":"采煤"}
 // ,{"value": "1004", "title": "地点二","time":"1"}
 // ,{"value": "1005", "title": "地点三","time":"1"}
-,{"value": "2005", "title": "地点三","time":"2"}
+,{"value": "2地点三", "title": "地点三","time":"2","type":"采煤"}
 // ,{"value": "1006", "title": "地点一","time":"1"}
-,{"value": "2007", "title": "地点一","time":"2"}
+,{"value": "2地点一", "title": "地点一","time":"2","type":"采煤"}
 // ,{"value": "2008", "title": "地点二","time":"2"}
-,{"value": "3009", "title": "地点二","time":"3"}
+,{"value": "3地点二", "title": "地点二","time":"3","type":"采煤"}
 ]
 //初始化地点列表
 // var placelist=["地点一","地点二","地点三","李白","地点四","地点五"]
@@ -118,7 +118,7 @@ transfer.render({
 }
   ,title: ['全部地点', '选中地点']
   ,id: 'key1' //定义唯一索引
-  ,value: ["3001"]
+  ,value: ["3地点六"]
 })
 
 
