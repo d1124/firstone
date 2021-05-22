@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>班报</title>
+  <link rel="stylesheet" href="layui/css/layui.css">
+<script src="Bmob-2.2.5.min.js"></script>
+</head>
+<body>
+
+  <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>选择时间</legend>
+  </fieldset>
+
+  <form class="layui-form" action="">
+    <div class="layui-inline">
+      <label class="layui-form-label">日期</label>
+      <div class="layui-input-inline">
+        <input type="text" name="date" id="date" lay-verify="date" autocomplete="on" class="layui-input">
+      </div>
+    </div>
+    <!-- <div class="layui-form-item">
+      <label class="layui-form-label">选择</label>
+      <div class="layui-input-block">
+        <input type="radio" name="class" value="早" title="早" checked="">
+        <input type="radio" name="class" value="中" title="中">
+        <input type="radio" name="class" value="晚" title="晚">
+      </div> -->
+    </div>
+
+    <div class="layui-form-item">
+      <div class="layui-input-block">
+        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">查询</button>
+      </div>
+    </div>
+  </form>
+
+
+<table class="layui-table" id="test" lay-filter="test"></table>
+
+<script src="layui/layui.js"></script>
+<script>
+layui.use('table', function(){
+  var table = layui.table
+  ,laydate = layui.laydate
+  ,form = layui.form;
+
+  Bmob.initialize("f1cdf3c708bde14d", "981124");
+  laydate.render({
+    elem: '#date'
+  });
+  form.on('submit(demo1)', function(data1){
+    const query = Bmob.Query('TaskData');
+    query.equalTo("Date","==", data1.field.date);
+    // query.statTo("groupby", "placename");
+    // query.equalTo("classtime","==", data1.field.class);
+    // query.include('time1','time2','time3');
+    query.find().then(res => {
+      
+      // window.Array4= new Array();
+      // for(var i = 0 ; i < res.length ; i++){
+      //   var Obj=new Object();
+      //   Obj.placename=list[i]["placename"];
+      //   Obj.ch4=list[i]["_maxCH4"];
+      //   Array4.push(Obj);
+      // }
+        data=res;
+        console.log(res)
+        table.render({
+          elem: '#test'
+          ,url:'https://d1124.github.io/firstone/1.json'
+          ,title: data1.field.date+'日报表'
+          ,toolbar: '#toolbarDemo'
+          ,cols: [
+            [
+            {field:'placename', title:'地点',unresize:true},
+             {field:'CH4',title:'CH4',templet: function(d){if(d._maxCH4!=null)return d._maxCH4;return ''}}
+            ,{title:'CO2',templet: function(d){if(d.time1!=null)if(d.time1.CO2!=null)return d.time1.CO2;return ''}}
+            ,{title:'CO',templet: function(d){if(d.time1!=null)if(d.time1.CO!=null)return d.time1.CO;return ''}}
+            ,{title:'O2',templet: function(d){if(d.time1!=null)if(d.time1.O2!=null)return d.time1.O2;return ''}}
+            ,{title:'温度',templet: function(d){if(d.time1!=null)if(d.time1.T!=null)return d.time1.T;return ''}}
+            ,{title:'探头',templet: function(d){if(d.time1!=null)if(d.time1.tantou!=null)return d.time1.tantou;return ''}}
+            ,{title:'时间(h.min)',templet: function(d){if(d.time1!=null)if(d.time1.time!=null)return d.time1.time;return ''}}
+            ,{title:'瓦检员',templet: function(d){if(d.time1!=null)if(d.time1.fireboss!=null)return d.time1.fireboss;return ''}}
+            ]
+            ]
+          ,page: true
+          ,response: {
+            statusCode: 200
+          }
+          ,parseData: function(res){
+            return {
+              "code": res.status,
+              "msg": data.length,
+              "count": data.length,
+              "data": data
+            };
+          }
+        });
+      }).catch(err => {
+        // console.log(err)
+      })
+    return false;
+  });
+});
+</script>
+</body>
+</html>

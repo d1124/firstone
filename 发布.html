@@ -11,23 +11,14 @@
 <script src="Bmob-2.2.5.min.js"></script>
 </head>
 <body>
-
-  <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
-    <legend>批量处理事件</legend>
-  </fieldset>
-  <div class="layui-btn-container">
-    <button class="layui-btn" lay-active="e1">发布</button>
-    <button class="layui-btn" lay-active="e2">2</button>
-    <button class="layui-btn" lay-active="e3">3</button>
-  </div>
-
   <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
     <legend>选择</legend>
   </fieldset>
   <div class="layui-btn-container">
-    <button type="button" class="layui-btn" lay-demotransferactive="getData">发布当天任务</button>
+    <button type="button" class="layui-btn" lay-demotransferactive="getData">导入地区列表</button>
     <button type="button" class="layui-btn" lay-demotransferactive="reload">自动选择</button>
   </div>
+
   <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
   <legend>A班</legend>
 </fieldset>
@@ -41,15 +32,57 @@
 </fieldset>
 <div id="test9" class="demo-transfer"></div>
 
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
+  <legend>选择时间和早班开始时间</legend>
+</fieldset>
+<!-- <div class="layui-btn-container">
+  <button class="layui-btn" lay-active="e1">发布</button>
+  <button class="layui-btn" lay-active="e2">2</button>
+  <button class="layui-btn" lay-active="e3">3</button>
+</div> -->
+<form class="layui-form" action="">
+  <div class="layui-inline">
+    <label class="layui-form-label">日期</label>
+    <div class="layui-input-inline">
+      <input type="text" name="date" id="date" lay-verify="date" autocomplete="on" class="layui-input">
+    </div>
+  </div>
+  <div class="layui-form-item">
+    <label class="layui-form-label">早班开始时间</label>
+    <div class="layui-input-inline">
+      <input type="text" name="time" id="time" lay-verify="time" autocomplete="on" class="layui-input">
+    </div>
+  </div>
+
+  <div class="layui-form-item">
+    <div class="layui-input-block">
+      <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">发布</button>
+    </div>
+  </div>
+</form>
+
+
 <!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
 <script src="layui/layui.js"></script>
 
 <script>
-layui.use(['transfer', 'layer', 'util'], function(){
+layui.use(['transfer', 'layer', 'util','laydate','form'], function(){
   var $ = layui.$
   ,transfer = layui.transfer
   ,layer = layui.layer
+  ,laydate = layui.laydate
+  ,form = layui.form
   ,util = layui.util;
+
+  laydate.render({
+  elem: '#date'
+  ,type: 'date'
+  });
+  laydate.render({
+  elem: '#time'
+  ,type: 'time'
+  ,format: 'HH:mm'
+  });
 
 // Bmob.initialize("2ba7d49d6cd824c5", "981124");
 Bmob.initialize("f1cdf3c708bde14d", "981124");
@@ -132,7 +165,7 @@ function selectlist(place,date,classtime){
   return queryObj;
 }
 window.list= new Array();
-function initline(getDataRes,array,classname,date,classtime){
+function initline(getDataRes,array,classname,date,classtime,begintime){
   var getData = transfer.getData(getDataRes);
   // const TaskArray = new Array();
   for(var i = 0 ; i < getData.length ; i++){
@@ -149,6 +182,9 @@ function initline(getDataRes,array,classname,date,classtime){
   queryObj.set('Date',date);
   queryObj.set('classname',classname);
   queryObj.set('classtime',classtime);
+  queryObj.set('begintime',begintime);
+
+  queryObj.set('fireboss',"未上传");
 
   // TaskArray.push(queryObj);
   list.push(queryObj);
@@ -174,83 +210,235 @@ function initline(getDataRes,array,classname,date,classtime){
 }
 
 
+util.event('lay-demoTransferActive', {
+  getData: function(othis){
 
-util.event('lay-active', {
-  e1: function(){
-    layer.msg('初始化地区');
-    const queryArray = new Array();
-    for(var i = 0 ; i < placelist.length ; i++){
-    queryArray.push(selectlist(placelist[i],'2021-05-19','早'));
-    queryArray.push(selectlist(placelist[i],'2021-05-19','中'));
-    queryArray.push(selectlist(placelist[i],'2021-05-19','晚'));
-    }
+  //   var getData = transfer.getData('key1'); //获取右侧数据
+  //   // layer.alert(JSON.stringify(getData));
+  //   // var Data1=JSON.stringify(getData);
+  //   for(var i = 0 ; i < getData.length ; i++){
+  //   var place=getData[i]["title"];
+  //   var time=getData[i]["value"];
+  // }
+  //   // str.slice(0,-3);
+  //   // layer.alert(str.slice(0,-3));
+  //   layer.alert(time.slice(0,1)+"-"+place.slice(0,-3)+getData.length);
 
-    Bmob.Query('select').saveAll(queryArray).then(result => {
-      const Array3= new Array();
-      for(var i = 0 ; i < result.length ; i++){
-        var Obj=new Object();
-        Obj.place=queryArray[i]["setData"]["place"];
-        Obj.time=queryArray[i]["setData"]["classtime"];
-        Obj.Id=result[i]["success"]["objectId"];
-        Array3.push(Obj);
+
+  }
+  ,reload:function(){
+    //实例重载
+    transfer.reload('key1', {
+      value: ['1002', '2001', '3001']
+      ,showSearch: true
+      ,parseData: function(res){
+      return {
+        "value": res.value //数据值
+        ,"title": res.title //数据标题
+        ,"disabled": res.disabled  //是否禁用
+        ,"checked": res.checked //是否选中
       }
-      initline('key1',Array3,'A','2021-05-19','早');
-      initline('key1',Array3,'A','2021-05-19','中');
-      initline('key1',Array3,'A','2021-05-19','晚');
-      initline('key2',Array3,'B','2021-05-19','早');
-      initline('key2',Array3,'B','2021-05-19','中');
-      initline('key2',Array3,'B','2021-05-19','晚');
-      initline('key3',Array3,'C','2021-05-19','早');
-      initline('key3',Array3,'C','2021-05-19','中');
-      initline('key3',Array3,'C','2021-05-19','晚');
-
-      Bmob.Query('TaskData').saveAll(list).then(result => {
-        window.Array4= new Array();
-        for(var i = 0 ; i < result.length ; i++){
-          var Obj=new Object();
-          Obj.DataId=list[i]["setData"]["DataID"];
-          Obj.timenum=list[i]["setData"]["timenum"];
-          Obj.Id=result[i]["success"]["objectId"];
-          Array4.push(Obj);
-        }
-        for(var i = 0 ; i < Array4.length ; i++){
-        const query = Bmob.Query('select');
-        const pointer = Bmob.Pointer('TaskData')//pointer指向
-        const poiID = pointer.set(Array4[i]["Id"])//指向行
-        if(Array4[i]["timenum"]=== "1"){
-          query.get(Array4[i]["DataId"]).then(res => {
-          res.set('time1',poiID);
-          res.save()
-          }).catch(err => {console.log(err)})
-          }
-        if(Array4[i]["timenum"]=== "2"){
-          query.get(Array4[i]["DataId"]).then(res => {
-          res.set('time2',poiID);
-          res.save()
-          }).catch(err => {console.log(err)})
-          }
-        if(Array4[i]["timenum"]=== "3"){
-          query.get(Array4[i]["DataId"]).then(res => {
-          res.set('time3',poiID);
-          res.save()
-          }).catch(err => {console.log(err)})
-          }
-
-        }
-
-        list= new Array();
-      }).catch(err => {console.log(err);});
-
-    }).catch(err => {console.log(err);});
-  }
-  ,e2: function(){
-    layer.msg('触发了事件2');
-
-  }
-  ,e3: function(){
-    layer.msg('触发了事件3');
+    }
+    })
+    // transfer.reload('key2', {
+    //   value: ['1001', '1002', '1001']
+    //   ,showSearch: true
+    //   ,parseData: function(res){
+    //   return {
+    //     "value": res.value //数据值
+    //     ,"title": res.title //数据标题
+    //     ,"disabled": res.disabled  //是否禁用
+    //     ,"checked": res.checked //是否选中
+    //   }
+    // }
+    // })
+    // transfer.reload('key3', {
+    //   value: ['1002', '1006', '1007']
+    //   ,showSearch: true
+    //   ,parseData: function(res){
+    //   return {
+    //     "value": res.value //数据值
+    //     ,"title": res.title //数据标题
+    //     ,"disabled": res.disabled  //是否禁用
+    //     ,"checked": res.checked //是否选中
+    //   }
+    // }
+    // })
   }
 });
+
+
+
+form.on('submit(demo1)', function(data1){
+// console.log(data1.field.date);
+// console.log(
+//   // data1.field.time.slice(0,2)
+// parseInt(data1.field.time.slice(0,2), 10)+8
+// );
+var h=parseInt(data1.field.time.slice(0,2), 10);
+var h2=h+8;
+var h3=h+16;
+hx=h+data1.field.time.slice(2,5);
+if(h<10)hx="0"+h+data1.field.time.slice(2,5);
+hy=h2+data1.field.time.slice(2,5);
+if(h2<10)hy="0"+h+data1.field.time.slice(2,5);
+hz=h3+data1.field.time.slice(2,5);
+// if(h3>24)hy="0"+h+data1.field.time.slice(2,5);
+// console.log(hx+hy+hz);
+
+layer.msg('初始化地区');
+// transfer.getData('');
+
+const queryArray = new Array();
+for(var i = 0 ; i < placelist.length ; i++){
+queryArray.push(selectlist(placelist[i],data1.field.date,'早'));
+queryArray.push(selectlist(placelist[i],data1.field.date,'中'));
+queryArray.push(selectlist(placelist[i],data1.field.date,'晚'));
+}
+
+Bmob.Query('select').saveAll(queryArray).then(result => {
+  const Array3= new Array();
+  for(var i = 0 ; i < result.length ; i++){
+    var Obj=new Object();
+    Obj.place=queryArray[i]["setData"]["place"];
+    Obj.time=queryArray[i]["setData"]["classtime"];
+    Obj.Id=result[i]["success"]["objectId"];
+    Array3.push(Obj);
+  }
+  initline('key1',Array3,'A',data1.field.date,'早',hx);
+  initline('key1',Array3,'A',data1.field.date,'中',hy);
+  initline('key1',Array3,'A',data1.field.date,'晚',hz);
+  initline('key2',Array3,'B',data1.field.date,'早',hx);
+  initline('key2',Array3,'B',data1.field.date,'中',hy);
+  initline('key2',Array3,'B',data1.field.date,'晚',hz);
+  initline('key3',Array3,'C',data1.field.date,'早',hx);
+  initline('key3',Array3,'C',data1.field.date,'中',hy);
+  initline('key3',Array3,'C',data1.field.date,'晚',hz);
+
+  Bmob.Query('TaskData').saveAll(list).then(result => {
+    window.Array4= new Array();
+    for(var i = 0 ; i < result.length ; i++){
+      var Obj=new Object();
+      Obj.DataId=list[i]["setData"]["DataID"];
+      Obj.timenum=list[i]["setData"]["timenum"];
+      Obj.Id=result[i]["success"]["objectId"];
+      Array4.push(Obj);
+    }
+    for(var i = 0 ; i < Array4.length ; i++){
+    const query = Bmob.Query('select');
+    const pointer = Bmob.Pointer('TaskData')//pointer指向
+    const poiID = pointer.set(Array4[i]["Id"])//指向行
+    if(Array4[i]["timenum"]=== "1"){
+      query.get(Array4[i]["DataId"]).then(res => {
+      res.set('time1',poiID);
+      res.save()
+      }).catch(err => {console.log(err)})
+      }
+    if(Array4[i]["timenum"]=== "2"){
+      query.get(Array4[i]["DataId"]).then(res => {
+      res.set('time2',poiID);
+      res.save()
+      }).catch(err => {console.log(err)})
+      }
+    if(Array4[i]["timenum"]=== "3"){
+      query.get(Array4[i]["DataId"]).then(res => {
+      res.set('time3',poiID);
+      res.save()
+      }).catch(err => {console.log(err)})
+      }
+
+    }
+
+    list= new Array();
+  }).catch(err => {console.log(err);});
+
+}).catch(err => {console.log(err);});
+
+
+return false;
+});
+
+
+
+// util.event('lay-active', {
+//   e1: function(){
+//     layer.msg('初始化地区');
+//     // transfer.getData('');
+//
+//     const queryArray = new Array();
+//     for(var i = 0 ; i < placelist.length ; i++){
+//     queryArray.push(selectlist(placelist[i],'2021-05-19','早'));
+//     queryArray.push(selectlist(placelist[i],'2021-05-19','中'));
+//     queryArray.push(selectlist(placelist[i],'2021-05-19','晚'));
+//     }
+//
+//     Bmob.Query('select').saveAll(queryArray).then(result => {
+//       const Array3= new Array();
+//       for(var i = 0 ; i < result.length ; i++){
+//         var Obj=new Object();
+//         Obj.place=queryArray[i]["setData"]["place"];
+//         Obj.time=queryArray[i]["setData"]["classtime"];
+//         Obj.Id=result[i]["success"]["objectId"];
+//         Array3.push(Obj);
+//       }
+//       initline('key1',Array3,'A','2021-05-19','早');
+//       initline('key1',Array3,'A','2021-05-19','中');
+//       initline('key1',Array3,'A','2021-05-19','晚');
+//       initline('key2',Array3,'B','2021-05-19','早');
+//       initline('key2',Array3,'B','2021-05-19','中');
+//       initline('key2',Array3,'B','2021-05-19','晚');
+//       initline('key3',Array3,'C','2021-05-19','早');
+//       initline('key3',Array3,'C','2021-05-19','中');
+//       initline('key3',Array3,'C','2021-05-19','晚');
+//
+//       Bmob.Query('TaskData').saveAll(list).then(result => {
+//         window.Array4= new Array();
+//         for(var i = 0 ; i < result.length ; i++){
+//           var Obj=new Object();
+//           Obj.DataId=list[i]["setData"]["DataID"];
+//           Obj.timenum=list[i]["setData"]["timenum"];
+//           Obj.Id=result[i]["success"]["objectId"];
+//           Array4.push(Obj);
+//         }
+//         for(var i = 0 ; i < Array4.length ; i++){
+//         const query = Bmob.Query('select');
+//         const pointer = Bmob.Pointer('TaskData')//pointer指向
+//         const poiID = pointer.set(Array4[i]["Id"])//指向行
+//         if(Array4[i]["timenum"]=== "1"){
+//           query.get(Array4[i]["DataId"]).then(res => {
+//           res.set('time1',poiID);
+//           res.save()
+//           }).catch(err => {console.log(err)})
+//           }
+//         if(Array4[i]["timenum"]=== "2"){
+//           query.get(Array4[i]["DataId"]).then(res => {
+//           res.set('time2',poiID);
+//           res.save()
+//           }).catch(err => {console.log(err)})
+//           }
+//         if(Array4[i]["timenum"]=== "3"){
+//           query.get(Array4[i]["DataId"]).then(res => {
+//           res.set('time3',poiID);
+//           res.save()
+//           }).catch(err => {console.log(err)})
+//           }
+//
+//         }
+//
+//         list= new Array();
+//       }).catch(err => {console.log(err);});
+//
+//     }).catch(err => {console.log(err);});
+//   }
+//   ,e2: function(){
+//     layer.msg('触发了事件2');
+//
+//
+//   }
+//   ,e3: function(){
+//     layer.msg('触发了事件3');
+//   }
+// });
 
 
 });
