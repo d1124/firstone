@@ -88,13 +88,14 @@ layui.use(['transfer', 'layer', 'util','laydate','form'], function(){
 Bmob.initialize("f1cdf3c708bde14d", "981124");
 //地点及时间对应列表
 var data1 = [
-{"value": "1001", "title": "李白","time":"1"}
-,{"value": "2001", "title": "李白","time":"2"}
-,{"value": "3001", "title": "李白","time":"3"}
+{"value": "1001", "title": "地点六","time":"1"}
+,{"value": "2001", "title": "地点六","time":"2"}
+,{"value": "3001", "title": "地点六","time":"3"}
 ,{"value": "1002", "title": "地点四","time":"1"}
 ,{"value": "1003", "title": "地点五","time":"1"}
 ,{"value": "1004", "title": "地点二","time":"1"}
 ,{"value": "1005", "title": "地点三","time":"1"}
+,{"value": "1005", "title": "地点三","time":"2"}
 ,{"value": "1006", "title": "地点一","time":"1"}
 ,{"value": "2007", "title": "地点一","time":"2"}
 ,{"value": "2008", "title": "地点二","time":"2"}
@@ -102,7 +103,7 @@ var data1 = [
 ]
 //初始化地点列表
 // var placelist=["地点一","地点二","地点三","李白","地点四","地点五"]
- var placelist=["地点一","李白","地点四"]
+ var placelist=["地点一","地点四","地点六","地点五","地点三","地点二"]
 //实例调用
 transfer.render({
   elem: '#test7'
