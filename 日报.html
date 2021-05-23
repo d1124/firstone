@@ -107,16 +107,17 @@ queryp.find().then(res => {
 
       const Array3= new Array();
       const Arrayplace= new Array();
+      // var x=1;
       for(var i = 0 ; i < res.length ; i++){
-
+        // var x=1;
 
         var place = Arrayplace.filter(function (data) {return data.placename == res[i]["placename"]});
         var tp=typelist.filter(function (data) {return data.title == res[i]["placename"]});
         // console.log(tp)
         if(place.length<1){
-        var place_CH4=new Object();
-        place_CH4.placename=res[i]["placename"];
-        place_CH4.CH4=res[i]["CH4"];
+        // var place_CH4=new Object();
+        // place_CH4.placename=res[i]["placename"];
+        // place_CH4.CH4=res[i]["CH4"];
         // Arrayplace.push(place_CH4);
 
         var Obj=new Object();
@@ -129,12 +130,19 @@ queryp.find().then(res => {
         Obj.time=res[i]["time"];
         Obj.tantou=res[i]["tantou"];
         Obj.fireboss=res[i]["fireboss"];
+        // Obj.loc=x;
+        // x=x+1;
         Arrayplace.push(Obj);
-
+continue;
       }
-
-        else if(parseFloat(place.CH4)<=parseFloat(res[i]["CH4"])){
-          Arrayplace.remove(place);
+      // console.log(parseFloat(place[0]["CH4"]));
+      // console.log(parseFloat(res[i]["CH4"]));
+        if(parseFloat(place[0]["CH4"])<parseFloat(res[i]["CH4"])){
+          console.log(parseFloat(place[0]["CH4"]));
+          console.log(parseFloat(res[i]["CH4"]));
+          // Arrayplace.splice(place[0].loc,1);
+          // console.log(place[0]);
+          // Arrayplace.removeChild(place[0]);
           // Array3.remove();
           // var place_CH4=new Object();
           // place_CH4.placename=res[i]["placename"];
@@ -151,8 +159,14 @@ queryp.find().then(res => {
           Obj.time=res[i]["time"];
           Obj.tantou=res[i]["tantou"];
           Obj.fireboss=res[i]["fireboss"];
+          // Obj.loc=place[0].loc;
+          for(var id = 0 ; id < Arrayplace.length ; id++){
+            if(Arrayplace[id]["placename"]===res[i]["placename"])
+          Arrayplace.splice(id,1);
+        }
+          // x=x+1;
           Arrayplace.push(Obj);
-          continue;
+          // continue;
         }
         // console.log(place)
         // var thisCH4=place.filter(function (data) {return data.placename == });
