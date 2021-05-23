@@ -134,9 +134,9 @@ window.list= new Array();
 function initline(getDataRes,array,classname,date,classtime,begintime){
   var getData = transfer.getData(getDataRes);
   // const TaskArray = new Array();
-  for(var i = 0 ; i < getData.length ; i++){
-  var place=getData[i]["title"].slice(0,-4);
-  var time=getData[i]["value"].slice(0,1);
+  for(var ix = 0 ; ix < getData.length ; ix++){
+  var place=getData[ix]["title"].slice(0,-4);
+  var time=getData[ix]["value"].slice(0,1);
   var queryData = array.filter(function (data) {return data.place == place});
   var queryData2=queryData.filter(function (data) {return data.time == classtime});
   var Id=queryData2[0]["Id"];

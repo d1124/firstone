@@ -90,9 +90,9 @@ Bmob.initialize("f1cdf3c708bde14d", "981124");
 var data1 = [
 // {"value": "1001", "title": "地点六","time":"1"}
 // ,{"value": "2001", "title": "地点六","time":"2"}
-{"value": "3地点六", "title": "地点六","time":"3","type":"采煤"}
-,{"value": "1地点四", "title": "地点四","time":"1","type":"采煤"}
-,{"value": "1地点五", "title": "地点五","time":"1","type":"采煤"}
+// {"value": "3地点六", "title": "地点六","time":"3","type":"采煤"}
+// ,{"value": "1地点四", "title": "地点四","time":"1","type":"采煤"}
+{"value": "1地点五", "title": "地点五","time":"1","type":"采煤"}
 // ,{"value": "1004", "title": "地点二","time":"1"}
 // ,{"value": "1005", "title": "地点三","time":"1"}
 ,{"value": "2地点三", "title": "地点三","time":"2","type":"采煤"}
@@ -167,11 +167,15 @@ function selectlist(place,date,classtime){
 }
 window.list= new Array();
 function initline(getDataRes,array,classname,date,classtime,begintime){
-  var getData = transfer.getData(getDataRes);
+  var getDatax = transfer.getData(getDataRes);
+  console.log(getDatax);
   // const TaskArray = new Array();
-  for(var i = 0 ; i < getData.length ; i++){
-  var place=getData[i]["title"].slice(0,-4);
-  var time=getData[i]["value"].slice(0,1);
+  for(var ix = 0 ; ix < getDatax.length ; ix++){
+  // var place=getDatax[i]["title"].slice(0,-4);
+  var place=getDatax[ix]["value"].slice(1);
+  console.log(getDatax.length);
+  console.log(place+ix);
+  var time=getDatax[ix]["value"].slice(0,1);
   var queryData = array.filter(function (data) {return data.place == place});
   var queryData2=queryData.filter(function (data) {return data.time == classtime});
   var Id=queryData2[0]["Id"];
@@ -215,58 +219,59 @@ function initline(getDataRes,array,classname,date,classtime,begintime){
 
 util.event('lay-demoTransferActive', {
   getData: function(othis){
-
-    const query = Bmob.Query("place");
-    // query.equalTo("line","==", "A");
-    query.find().then(res => {
-        const Arrayplace= new Array();
-          for(var i = 0 ; i < res.length ; i++){
-        var Obj=new Object();
-        Obj.title=res[i]["title"];
-        Obj.type=res[i]["type"];
-        Obj.time=res[i]["time"];
-        Obj.line=res[i]["line"];
-        Obj.value=res[i]["time"]+res[i]["title"];
-        Arrayplace.push(Obj);
-      }
-      transfer.reload('key1', {
-        data: Arrayplace
-        ,showSearch: true
-        ,parseData: function(res){
-        return {
-          "value": res.value //数据值
-          ,"title": res.title+"("+res.time+"次)" //数据标题
-          ,"disabled": res.disabled  //是否禁用
-          ,"checked": res.checked //是否选中
-        }
-      }
-      })
-      transfer.reload('key2', {
-        data: Arrayplace
-        ,showSearch: true
-        ,parseData: function(res){
-        return {
-          "value": res.value //数据值
-          ,"title": res.title+"("+res.time+"次)" //数据标题
-          ,"disabled": res.disabled  //是否禁用
-          ,"checked": res.checked //是否选中
-        }
-      }
-      })
-      transfer.reload('key3', {
-        data: Arrayplace
-        ,showSearch: true
-        ,parseData: function(res){
-        return {
-          "value": res.value //数据值
-          ,"title": res.title+"("+res.time+"次)" //数据标题
-          ,"disabled": res.disabled  //是否禁用
-          ,"checked": res.checked //是否选中
-        }
-      }
-      })
-
-    })
+var getData = transfer.getData("key1");
+console.log(getData);
+    // const query = Bmob.Query("place");
+    // // query.equalTo("line","==", "A");
+    // query.find().then(res => {
+    //     const Arrayplace= new Array();
+    //       for(var i = 0 ; i < res.length ; i++){
+    //     var Obj=new Object();
+    //     Obj.title=res[i]["title"];
+    //     Obj.type=res[i]["type"];
+    //     Obj.time=res[i]["time"];
+    //     Obj.line=res[i]["line"];
+    //     Obj.value=res[i]["time"]+res[i]["title"];
+    //     Arrayplace.push(Obj);
+    //   }
+    //   transfer.reload('key1', {
+    //     data: Arrayplace
+    //     ,showSearch: true
+    //     ,parseData: function(res){
+    //     return {
+    //       "value": res.value //数据值
+    //       ,"title": res.title+"("+res.time+"次)" //数据标题
+    //       ,"disabled": res.disabled  //是否禁用
+    //       ,"checked": res.checked //是否选中
+    //     }
+    //   }
+    //   })
+    //   transfer.reload('key2', {
+    //     data: Arrayplace
+    //     ,showSearch: true
+    //     ,parseData: function(res){
+    //     return {
+    //       "value": res.value //数据值
+    //       ,"title": res.title+"("+res.time+"次)" //数据标题
+    //       ,"disabled": res.disabled  //是否禁用
+    //       ,"checked": res.checked //是否选中
+    //     }
+    //   }
+    //   })
+    //   transfer.reload('key3', {
+    //     data: Arrayplace
+    //     ,showSearch: true
+    //     ,parseData: function(res){
+    //     return {
+    //       "value": res.value //数据值
+    //       ,"title": res.title+"("+res.time+"次)" //数据标题
+    //       ,"disabled": res.disabled  //是否禁用
+    //       ,"checked": res.checked //是否选中
+    //     }
+    //   }
+    //   })
+    //
+    // })
 
 
   }
@@ -568,6 +573,7 @@ Bmob.Query('select').saveAll(queryArray).then(result => {
     Obj.Id=result[i]["success"]["objectId"];
     Array3.push(Obj);
   }
+  console.log(Array3);
   initline('key1',Array3,'A',data1.field.date,'早',hx);
   initline('key1',Array3,'A',data1.field.date,'中',hy);
   initline('key1',Array3,'A',data1.field.date,'晚',hz);
@@ -616,8 +622,10 @@ Bmob.Query('select').saveAll(queryArray).then(result => {
   }).catch(err => {console.log(err);});
 
 }).catch(err => {console.log(err);});
-
-
+layer.open({
+title: '发布成功'
+,content: '当天请勿再次发布'
+});
 return false;
 });
 
