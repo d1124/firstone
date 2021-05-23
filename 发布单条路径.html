@@ -180,61 +180,70 @@ function initline(getDataRes,array,classname,date,classtime,begintime){
 
 util.event('lay-demoTransferActive', {
   getData: function(othis){
+    const query = Bmob.Query("place");
+    // query.equalTo("line","==", "A");
+    query.find().then(res => {
+        const Arrayplace= new Array();
+          for(var i = 0 ; i < res.length ; i++){
+        var Obj=new Object();
+        Obj.title=res[i]["title"];
+        Obj.type=res[i]["type"];
+        Obj.time=res[i]["time"];
+        Obj.line=res[i]["line"];
+        Obj.value=res[i]["time"]+res[i]["title"];
+        Arrayplace.push(Obj);
+      }
+      transfer.reload('key1', {
+        data: Arrayplace
+        ,showSearch: true
+        ,parseData: function(res){
+        return {
+          "value": res.value //数据值
+          ,"title": res.title+"("+res.time+"次)" //数据标题
+          ,"disabled": res.disabled  //是否禁用
+          ,"checked": res.checked //是否选中
+        }
+      }
+      })
 
-  //   var getData = transfer.getData('key1'); //获取右侧数据
-  //   // layer.alert(JSON.stringify(getData));
-  //   // var Data1=JSON.stringify(getData);
-  //   for(var i = 0 ; i < getData.length ; i++){
-  //   var place=getData[i]["title"];
-  //   var time=getData[i]["value"];
-  // }
-  //   // str.slice(0,-3);
-  //   // layer.alert(str.slice(0,-3));
-  //   layer.alert(time.slice(0,1)+"-"+place.slice(0,-3)+getData.length);
+    })
+
 
 
   }
+
   ,reload:function(){
+
+const query = Bmob.Query("place");
+// query.equalTo("line","==", "A");
+query.find().then(res => {
+    const Arrayplace= new Array();
+      for(var i = 0 ; i < res.length ; i++){
+    var Obj=new Object();
+    Obj.title=res[i]["title"];
+    Obj.type=res[i]["type"];
+    Obj.time=res[i]["time"];
+    Obj.line=res[i]["line"];
+    Obj.value=res[i]["time"]+res[i]["title"];
+    Arrayplace.push(Obj);
+  }
+    // console.log(Arrayplace);
     //实例重载
     transfer.reload('key1', {
-      value: ['1002', '3001']
+      data: Arrayplace
       ,showSearch: true
       ,parseData: function(res){
       return {
         "value": res.value //数据值
-        ,"title": res.title //数据标题
+        ,"title": res.title+"("+res.time+"次)" //数据标题
         ,"disabled": res.disabled  //是否禁用
         ,"checked": res.checked //是否选中
       }
     }
     })
-    // transfer.reload('key2', {
-    //   value: ['1001', '1002', '1001']
-    //   ,showSearch: true
-    //   ,parseData: function(res){
-    //   return {
-    //     "value": res.value //数据值
-    //     ,"title": res.title //数据标题
-    //     ,"disabled": res.disabled  //是否禁用
-    //     ,"checked": res.checked //是否选中
-    //   }
-    // }
-    // })
-    // transfer.reload('key3', {
-    //   value: ['1002', '1006', '1007']
-    //   ,showSearch: true
-    //   ,parseData: function(res){
-    //   return {
-    //     "value": res.value //数据值
-    //     ,"title": res.title //数据标题
-    //     ,"disabled": res.disabled  //是否禁用
-    //     ,"checked": res.checked //是否选中
-    //   }
-    // }
-    // })
-  }
+  })
+}
 });
-
 
 
 form.on('submit(demo1)', function(data1){

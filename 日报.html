@@ -52,14 +52,52 @@ layui.use('table', function(){
     elem: '#date'
   });
 
-var typelist=[
-  {"title":"地点一","type":"采煤"}
-,{"title":"地点四","type":"掘进"}
-,{"title":"地点六","type":"硐室"}
-,{"title":"地点七","type":"其他"}
-]
+// var typelist=[
+//   {"title":"地点一","type":"采煤"}
+// ,{"title":"地点四","type":"掘进"}
+// ,{"title":"地点六","type":"硐室"}
+// ,{"title":"地点七","type":"其他"}
+// ]
+// console.log(typelist);
+const typelist= new Array();
+const queryp = Bmob.Query("place");
+// query.equalTo("line","==", "A");
+queryp.find().then(res => {
+  // var typelist=res;
+    // const typelist= new Array();
+      for(var i = 0 ; i < res.length ; i++){
+    var Obj=new Object();
+    Obj.title=res[i]["title"];
+    Obj.type=res[i]["type"];
+    // Obj.time=res[i]["time"];
+    // Obj.line=res[i]["line"];
+    // Obj.value=res[i]["time"]+res[i]["title"];
+    typelist.push(Obj);
+  }
+  console.log(typelist);
+});
+
+
 
   form.on('submit(demo1)', function(data1){
+
+    // const queryp = Bmob.Query("place");
+    // // query.equalTo("line","==", "A");
+    // queryp.find().then(res => {
+    //   // var typelist=res;
+    //     const typelist= new Array();
+    //       for(var i = 0 ; i < res.length ; i++){
+    //     var Obj=new Object();
+    //     Obj.title=res[i]["title"];
+    //     Obj.type=res[i]["type"];
+    //     // Obj.time=res[i]["time"];
+    //     // Obj.line=res[i]["line"];
+    //     // Obj.value=res[i]["time"]+res[i]["title"];
+    //     typelist.push(Obj);
+    //   }
+    //   console.log(typelist)
+
+
     const query = Bmob.Query('TaskData');
     query.equalTo("Date","==", data1.field.date);
     // query.statTo("groupby", "placename");
@@ -152,8 +190,8 @@ console.log(Arrayplace)
           ,toolbar: '#toolbarDemo'
           ,cols: [
             [
-              {field:'placename', title:'地点',unresize:true, sort: true}
-              ,{field:'type', title:'地点类型',unresize:true, sort: true}
+              {field:'placename', title:'地点', sort: true}
+              ,{field:'type', title:'地点类型', sort: true}
                ,{field:'CH4',title:'CH4',edit: 'text', sort: true}
                ,{field:'CO2',title:'CO2',edit: 'text', sort: true}
                ,{field:'CO',title:'CO',edit: 'text', sort: true}
@@ -181,6 +219,8 @@ console.log(Arrayplace)
       })
     return false;
   });
+
+// })
 });
 </script>
 </body>
