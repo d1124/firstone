@@ -199,7 +199,7 @@ util.event('lay-demoTransferActive', {
         ,parseData: function(res){
         return {
           "value": res.value //数据值
-          ,"title": res.title+"("+res.time+"次)" //数据标题
+          ,"title": res.title+"("+res.time+"次)"+"(路线："+res.line+")" //数据标题
           ,"disabled": res.disabled  //是否禁用
           ,"checked": res.checked //是否选中
         }
@@ -235,7 +235,7 @@ query.find().then(res => {
       ,parseData: function(res){
       return {
         "value": res.value //数据值
-        ,"title": res.title+"("+res.time+"次)" //数据标题
+        ,"title": res.title+"("+res.time+"次)"+"(路线："+res.line+")" //数据标题
         ,"disabled": res.disabled  //是否禁用
         ,"checked": res.checked //是否选中
       }
@@ -266,8 +266,8 @@ hz=h3+data1.field.time.slice(2,5);
 // console.log(hx+hy+hz);
 var getData1 = transfer.getData('key1');
 var placelist= new Array();
-for(var i = 0 ; i < getData1.length ; i++)placelist.push(getData1[i]["title"].slice(0,-4));
-layer.msg('初始化地区');
+for(var i = 0 ; i < getData1.length ; i++)placelist.push(getData1[i]["value"].slice(1));
+layer.msg('初始化地区成功');
 // transfer.getData('');
 
 const queryArray = new Array();
