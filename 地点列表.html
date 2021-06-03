@@ -20,13 +20,6 @@
   <div class="layui-input-inline">
     <input type="text" name="placename" required  lay-verify="required" placeholder="请输入地区名" autocomplete="off" class="layui-input">
   </div>
-    <!-- <div class="layui-form-item">
-      <label class="layui-form-label">选择</label>
-      <div class="layui-input-block">
-        <input type="radio" name="class" value="早" title="早" checked="">
-        <input type="radio" name="class" value="中" title="中">
-        <input type="radio" name="class" value="晚" title="晚">
-      </div> -->
     </div>
 
     <div class="layui-form-item">
@@ -47,9 +40,7 @@ layui.use('table', function(){
   ,form = layui.form;
 
   Bmob.initialize("f1cdf3c708bde14d", "981124");
-  laydate.render({
-    elem: '#date'
-  });
+
 
   const query = Bmob.Query('place');
   query.find().then(res => {
@@ -90,16 +81,17 @@ layui.use('table', function(){
 
 
   form.on('submit(demo1)', function(data1){
-    const query = Bmob.Query('place');
-query.set("title",data1.field.placename)
-query.set("time","1")
-query.save().then(res => {
+    const query1 = Bmob.Query('place');
+query1.set("title",data1.field.placename)
+query1.set("time","1")
+query1.save().then(res => {
   console.log(res)
+  location.reload();
 }).catch(err => {
   console.log(err)
 })
 
-    location.reload();
+    // location.reload();
     return false;
   });
 

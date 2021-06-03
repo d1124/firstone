@@ -21,13 +21,6 @@
         <input type="text" name="date" id="date" lay-verify="date" autocomplete="on" class="layui-input">
       </div>
     </div>
-    <!-- <div class="layui-form-item">
-      <label class="layui-form-label">选择</label>
-      <div class="layui-input-block">
-        <input type="radio" name="class" value="早" title="早" checked="">
-        <input type="radio" name="class" value="中" title="中">
-        <input type="radio" name="class" value="晚" title="晚">
-      </div> -->
     </div>
 
     <div class="layui-form-item">
@@ -54,18 +47,8 @@ layui.use('table', function(){
   form.on('submit(demo1)', function(data1){
     const query = Bmob.Query('TaskData');
     query.equalTo("Date","==", data1.field.date);
-    // query.statTo("groupby", "placename");
-    // query.equalTo("classtime","==", data1.field.class);
-    // query.include('time1','time2','time3');
     query.find().then(res => {
 
-      // window.Array4= new Array();
-      // for(var i = 0 ; i < res.length ; i++){
-      //   var Obj=new Object();
-      //   Obj.placename=list[i]["placename"];
-      //   Obj.ch4=list[i]["_maxCH4"];
-      //   Array4.push(Obj);
-      // }
         data=res;
         console.log(res)
         table.render({
@@ -86,13 +69,7 @@ layui.use('table', function(){
              ,{field:'tantou',title:'探头',edit: 'text', sort: true}
              ,{field:'time',title:'时间(h.min)',edit: 'text', sort: true}
              ,{field:'fireboss',title:'瓦检员',edit: 'text', sort: true}
-            // ,{title:'CO2',templet: function(d){if(d.time1!=null)if(d.time1.CO2!=null)return d.time1.CO2;return ''}}
-            // ,{title:'CO',templet: function(d){if(d.time1!=null)if(d.time1.CO!=null)return d.time1.CO;return ''}}
-            // ,{title:'O2',templet: function(d){if(d.time1!=null)if(d.time1.O2!=null)return d.time1.O2;return ''}}
-            // ,{title:'温度',templet: function(d){if(d.time1!=null)if(d.time1.T!=null)return d.time1.T;return ''}}
-            // ,{title:'探头',templet: function(d){if(d.time1!=null)if(d.time1.tantou!=null)return d.time1.tantou;return ''}}
-            // ,{title:'时间(h.min)',templet: function(d){if(d.time1!=null)if(d.time1.time!=null)return d.time1.time;return ''}}
-            // ,{title:'瓦检员',templet: function(d){if(d.time1!=null)if(d.time1.fireboss!=null)return d.time1.fireboss;return ''}}
+
             ]
             ]
           ,page: true

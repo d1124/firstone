@@ -35,11 +35,6 @@
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 50px;">
   <legend>选择时间和早班开始时间</legend>
 </fieldset>
-<!-- <div class="layui-btn-container">
-  <button class="layui-btn" lay-active="e1">发布</button>
-  <button class="layui-btn" lay-active="e2">2</button>
-  <button class="layui-btn" lay-active="e3">3</button>
-</div> -->
 <form class="layui-form" action="">
   <div class="layui-inline">
     <label class="layui-form-label">日期</label>
@@ -61,10 +56,7 @@
   </div>
 </form>
 
-
-<!-- 引入 layui.js 的 <script> 标签最好放置在 html 末尾 -->
 <script src="layui/layui.js"></script>
-
 <script>
 layui.use(['transfer', 'layer', 'util','laydate','form'], function(){
   var $ = layui.$
@@ -84,26 +76,15 @@ layui.use(['transfer', 'layer', 'util','laydate','form'], function(){
   ,format: 'HH:mm'
   });
 
-// Bmob.initialize("2ba7d49d6cd824c5", "981124");
 Bmob.initialize("f1cdf3c708bde14d", "981124");
 //地点及时间对应列表
 var data1 = [
-// {"value": "1001", "title": "地点六","time":"1"}
-// ,{"value": "2001", "title": "地点六","time":"2"}
-// {"value": "3地点六", "title": "地点六","time":"3","type":"采煤"}
-// ,{"value": "1地点四", "title": "地点四","time":"1","type":"采煤"}
 {"value": "1地点五", "title": "地点五","time":"1","type":"采煤"}
-// ,{"value": "1004", "title": "地点二","time":"1"}
-// ,{"value": "1005", "title": "地点三","time":"1"}
 ,{"value": "2地点三", "title": "地点三","time":"2","type":"采煤"}
-// ,{"value": "1006", "title": "地点一","time":"1"}
 ,{"value": "2地点一", "title": "地点一","time":"2","type":"采煤"}
-// ,{"value": "2008", "title": "地点二","time":"2"}
 ,{"value": "3地点二", "title": "地点二","time":"3","type":"采煤"}
 ]
 //初始化地点列表
-// var placelist=["地点一","地点二","地点三","李白","地点四","地点五"]
- // var placelist=["地点一","地点四","地点六","地点五","地点三","地点二"]
 //实例调用
 transfer.render({
   elem: '#test7'
@@ -169,9 +150,7 @@ window.list= new Array();
 function initline(getDataRes,array,classname,date,classtime,begintime){
   var getDatax = transfer.getData(getDataRes);
   console.log(getDatax);
-  // const TaskArray = new Array();
   for(var ix = 0 ; ix < getDatax.length ; ix++){
-  // var place=getDatax[i]["title"].slice(0,-4);
   var place=getDatax[ix]["value"].slice(1);
   console.log(getDatax.length);
   console.log(place+ix);
@@ -184,36 +163,15 @@ function initline(getDataRes,array,classname,date,classtime,begintime){
   queryObj.set('placename',place);
   queryObj.set('timenum',''+i);
   queryObj.set('DataID',Id);
-
   queryObj.set('Date',date);
   queryObj.set('classname',classname);
   queryObj.set('classtime',classtime);
   queryObj.set('begintime',begintime);
-
   queryObj.set('fireboss',"未上传");
-
-  // TaskArray.push(queryObj);
   list.push(queryObj);
 }
   }
-  // Bmob.Query('TaskData').saveAll(TaskArray).then(result => {
-  //   // const IDArray = new Array();
-  //   // for(var i = 0 ; i < result.length ; i++){
-  //   //   IDArray.push(result[i]["success"]["objectId"]);
-  //   // }
-  //   // const relation = Bmob.Relation('TaskData')
-  //   // const relID = relation.add(IDArray)
-  //   // const lineObj = Bmob.Query('line');
-  //   // // lineObj.set('classname',classname);
-  //   // // lineObj.set('classtime',classtime);
-  //   // lineObj.set('Date',date);
-  //   // lineObj.set('taskdatalist',relID);
-  //   // lineObj.save().then(res => {console.log(res)}).catch(err => {console.log(err)})
-  //
-  // }).catch(err => {console.log(err);});
-  // console.log(TaskArray);
 
-  // return TaskArray;
 }
 
 
@@ -221,57 +179,6 @@ util.event('lay-demoTransferActive', {
   getData: function(othis){
 var getData = transfer.getData("key1");
 console.log(getData);
-    // const query = Bmob.Query("place");
-    // // query.equalTo("line","==", "A");
-    // query.find().then(res => {
-    //     const Arrayplace= new Array();
-    //       for(var i = 0 ; i < res.length ; i++){
-    //     var Obj=new Object();
-    //     Obj.title=res[i]["title"];
-    //     Obj.type=res[i]["type"];
-    //     Obj.time=res[i]["time"];
-    //     Obj.line=res[i]["line"];
-    //     Obj.value=res[i]["time"]+res[i]["title"];
-    //     Arrayplace.push(Obj);
-    //   }
-    //   transfer.reload('key1', {
-    //     data: Arrayplace
-    //     ,showSearch: true
-    //     ,parseData: function(res){
-    //     return {
-    //       "value": res.value //数据值
-    //       ,"title": res.title+"("+res.time+"次)" //数据标题
-    //       ,"disabled": res.disabled  //是否禁用
-    //       ,"checked": res.checked //是否选中
-    //     }
-    //   }
-    //   })
-    //   transfer.reload('key2', {
-    //     data: Arrayplace
-    //     ,showSearch: true
-    //     ,parseData: function(res){
-    //     return {
-    //       "value": res.value //数据值
-    //       ,"title": res.title+"("+res.time+"次)" //数据标题
-    //       ,"disabled": res.disabled  //是否禁用
-    //       ,"checked": res.checked //是否选中
-    //     }
-    //   }
-    //   })
-    //   transfer.reload('key3', {
-    //     data: Arrayplace
-    //     ,showSearch: true
-    //     ,parseData: function(res){
-    //     return {
-    //       "value": res.value //数据值
-    //       ,"title": res.title+"("+res.time+"次)" //数据标题
-    //       ,"disabled": res.disabled  //是否禁用
-    //       ,"checked": res.checked //是否选中
-    //     }
-    //   }
-    //   })
-    //
-    // })
 
 
   }
@@ -336,12 +243,6 @@ console.log(getData);
       const ArrayplaceA= new Array();
       for(var i = 0 ; i < res.length ; i++){
       var Obj=new Object();
-      // Obj.title=res[i]["title"];
-      // Obj.type=res[i]["type"];
-      // Obj.time=res[i]["time"];
-      // Obj.line=res[i]["line"];
-      // Obj.value=res[i]["time"]+res[i]["title"];
-
       ArrayplaceA.push(res[i]["time"]+res[i]["title"]);
       }
       // console.log(Arrayplace);
@@ -364,16 +265,9 @@ console.log(getData);
     const query2 = Bmob.Query("place");
     query2.equalTo("line","==", "B");
     query2.find().then(res => {
-    // console.log(res)
     const ArrayplaceB= new Array();
     for(var i = 0 ; i < res.length ; i++){
     var Obj=new Object();
-    // Obj.title=res[i]["title"];
-    // Obj.type=res[i]["type"];
-    // Obj.time=res[i]["time"];
-    // Obj.line=res[i]["line"];
-    // Obj.value=res[i]["time"]+res[i]["title"];
-    // ArrayplaceB.push(Obj);
     ArrayplaceB.push(res[i]["time"]+res[i]["title"]);
     }
     // console.log(Arrayplace);
@@ -400,12 +294,6 @@ console.log(getData);
     const ArrayplaceC= new Array();
     for(var i = 0 ; i < res.length ; i++){
     var Obj=new Object();
-    // Obj.title=res[i]["title"];
-    // Obj.type=res[i]["type"];
-    // Obj.time=res[i]["time"];
-    // Obj.line=res[i]["line"];
-    // Obj.value=res[i]["time"]+res[i]["title"];
-    // ArrayplaceC.push(Obj);
     ArrayplaceC.push(res[i]["time"]+res[i]["title"]);
     }
     // console.log(Arrayplace);
@@ -430,113 +318,12 @@ console.log(getData);
 
     })
 
-
-//     const queryA = Bmob.Query("place");
-//     queryA.equalTo("line","==", "A");
-//     query.find().then(res => {
-//     // console.log(res)
-//     const ArrayplaceA= new Array();
-//     for(var i = 0 ; i < res.length ; i++){
-//     var Obj=new Object();
-//     // Obj.title=res[i]["title"];
-//     // Obj.type=res[i]["type"];
-//     // Obj.time=res[i]["time"];
-//     // Obj.line=res[i]["line"];
-//     // Obj.value=res[i]["time"]+res[i]["title"];
-//
-//     ArrayplaceA.push(res[i]["time"]+res[i]["title"]);
-//     }
-//     // console.log(Arrayplace);
-//     //实例重载
-//     transfer.reload('key1', {
-//       value: ArrayplaceA
-//       ,data: Arrayplace
-//       ,showSearch: true
-//       ,parseData: function(res){
-//       return {
-//         "value": res.value //数据值
-//         ,"title": res.title+"("+res.time+"次)" //数据标题
-//         ,"disabled": res.disabled  //是否禁用
-//         ,"checked": res.checked //是否选中
-//       }
-//     }
-//     })
-//   })
-//
-//   const query2 = Bmob.Query("place");
-//   query2.equalTo("line","==", "B");
-//   query2.find().then(res => {
-//   // console.log(res)
-//   const ArrayplaceB= new Array();
-//   for(var i = 0 ; i < res.length ; i++){
-//   var Obj=new Object();
-//   Obj.title=res[i]["title"];
-//   Obj.type=res[i]["type"];
-//   Obj.time=res[i]["time"];
-//   Obj.line=res[i]["line"];
-//   Obj.value=res[i]["time"]+res[i]["title"];
-//   ArrayplaceB.push(Obj);
-//   }
-//   // console.log(Arrayplace);
-//   //实例重载
-//   transfer.reload('key2', {
-//     // value: ['1002', '3001']
-//     data: ArrayplaceB
-//     ,showSearch: true
-//     ,parseData: function(res){
-//     return {
-//       "value": res.value //数据值
-//       ,"title": res.title+"("+res.time+"次)" //数据标题
-//       ,"disabled": res.disabled  //是否禁用
-//       ,"checked": res.checked //是否选中
-//     }
-//   }
-//   })
-// })
-//
-// const query3 = Bmob.Query("place");
-// query3.equalTo("line","==", "C");
-// query3.find().then(res => {
-// // console.log(res)
-// const ArrayplaceC= new Array();
-// for(var i = 0 ; i < res.length ; i++){
-// var Obj=new Object();
-// Obj.title=res[i]["title"];
-// Obj.type=res[i]["type"];
-// Obj.time=res[i]["time"];
-// Obj.line=res[i]["line"];
-// Obj.value=res[i]["time"]+res[i]["title"];
-// ArrayplaceC.push(Obj);
-// }
-// // console.log(Arrayplace);
-// //实例重载
-// transfer.reload('key3', {
-//   // value: ['1002', '3001']
-//   data: ArrayplaceC
-//   ,showSearch: true
-//   ,parseData: function(res){
-//   return {
-//     "value": res.value //数据值
-//     ,"title": res.title+"("+res.time+"次)" //数据标题
-//     ,"disabled": res.disabled  //是否禁用
-//     ,"checked": res.checked //是否选中
-//   }
-// }
-// })
-// })
-
-
 }
-});
+})
 
 
 
 form.on('submit(demo1)', function(data1){
-// console.log(data1.field.date);
-// console.log(
-//   // data1.field.time.slice(0,2)
-// parseInt(data1.field.time.slice(0,2), 10)+8
-// );
 var h=parseInt(data1.field.time.slice(0,2), 10);
 var h2=h+8;
 var h3=h+16;
@@ -545,8 +332,6 @@ if(h<10)hx="0"+h+data1.field.time.slice(2,5);
 hy=h2+data1.field.time.slice(2,5);
 if(h2<10)hy="0"+h+data1.field.time.slice(2,5);
 hz=h3+data1.field.time.slice(2,5);
-// if(h3>24)hy="0"+h+data1.field.time.slice(2,5);
-// console.log(hx+hy+hz);
 var getData1 = transfer.getData('key1');
 var getData2 = transfer.getData('key2');
 var getData3 = transfer.getData('key3');
@@ -555,7 +340,6 @@ for(var i = 0 ; i < getData1.length ; i++)placelist.push(getData1[i]["value"].sl
 for(var i = 0 ; i < getData2.length ; i++)placelist.push(getData2[i]["value"].slice(1));
 for(var i = 0 ; i < getData3.length ; i++)placelist.push(getData3[i]["value"].slice(1));
 layer.msg('初始化地区');
-// transfer.getData('');
 
 const queryArray = new Array();
 for(var i = 0 ; i < placelist.length ; i++){
@@ -628,89 +412,6 @@ title: '发布成功'
 });
 return false;
 });
-
-
-
-// util.event('lay-active', {
-//   e1: function(){
-//     layer.msg('初始化地区');
-//     // transfer.getData('');
-//
-//     const queryArray = new Array();
-//     for(var i = 0 ; i < placelist.length ; i++){
-//     queryArray.push(selectlist(placelist[i],'2021-05-19','早'));
-//     queryArray.push(selectlist(placelist[i],'2021-05-19','中'));
-//     queryArray.push(selectlist(placelist[i],'2021-05-19','晚'));
-//     }
-//
-//     Bmob.Query('select').saveAll(queryArray).then(result => {
-//       const Array3= new Array();
-//       for(var i = 0 ; i < result.length ; i++){
-//         var Obj=new Object();
-//         Obj.place=queryArray[i]["setData"]["place"];
-//         Obj.time=queryArray[i]["setData"]["classtime"];
-//         Obj.Id=result[i]["success"]["objectId"];
-//         Array3.push(Obj);
-//       }
-//       initline('key1',Array3,'A','2021-05-19','早');
-//       initline('key1',Array3,'A','2021-05-19','中');
-//       initline('key1',Array3,'A','2021-05-19','晚');
-//       initline('key2',Array3,'B','2021-05-19','早');
-//       initline('key2',Array3,'B','2021-05-19','中');
-//       initline('key2',Array3,'B','2021-05-19','晚');
-//       initline('key3',Array3,'C','2021-05-19','早');
-//       initline('key3',Array3,'C','2021-05-19','中');
-//       initline('key3',Array3,'C','2021-05-19','晚');
-//
-//       Bmob.Query('TaskData').saveAll(list).then(result => {
-//         window.Array4= new Array();
-//         for(var i = 0 ; i < result.length ; i++){
-//           var Obj=new Object();
-//           Obj.DataId=list[i]["setData"]["DataID"];
-//           Obj.timenum=list[i]["setData"]["timenum"];
-//           Obj.Id=result[i]["success"]["objectId"];
-//           Array4.push(Obj);
-//         }
-//         for(var i = 0 ; i < Array4.length ; i++){
-//         const query = Bmob.Query('select');
-//         const pointer = Bmob.Pointer('TaskData')//pointer指向
-//         const poiID = pointer.set(Array4[i]["Id"])//指向行
-//         if(Array4[i]["timenum"]=== "1"){
-//           query.get(Array4[i]["DataId"]).then(res => {
-//           res.set('time1',poiID);
-//           res.save()
-//           }).catch(err => {console.log(err)})
-//           }
-//         if(Array4[i]["timenum"]=== "2"){
-//           query.get(Array4[i]["DataId"]).then(res => {
-//           res.set('time2',poiID);
-//           res.save()
-//           }).catch(err => {console.log(err)})
-//           }
-//         if(Array4[i]["timenum"]=== "3"){
-//           query.get(Array4[i]["DataId"]).then(res => {
-//           res.set('time3',poiID);
-//           res.save()
-//           }).catch(err => {console.log(err)})
-//           }
-//
-//         }
-//
-//         list= new Array();
-//       }).catch(err => {console.log(err);});
-//
-//     }).catch(err => {console.log(err);});
-//   }
-//   ,e2: function(){
-//     layer.msg('触发了事件2');
-//
-//
-//   }
-//   ,e3: function(){
-//     layer.msg('触发了事件3');
-//   }
-// });
-
 
 });
 </script>

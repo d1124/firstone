@@ -21,13 +21,6 @@
         <input type="text" name="date" id="date" lay-verify="date" autocomplete="on" class="layui-input">
       </div>
     </div>
-    <!-- <div class="layui-form-item">
-      <label class="layui-form-label">选择</label>
-      <div class="layui-input-block">
-        <input type="radio" name="class" value="早" title="早" checked="">
-        <input type="radio" name="class" value="中" title="中">
-        <input type="radio" name="class" value="晚" title="晚">
-      </div> -->
     </div>
 
     <div class="layui-form-item">
@@ -52,26 +45,13 @@ layui.use('table', function(){
     elem: '#date'
   });
 
-// var typelist=[
-//   {"title":"地点一","type":"采煤"}
-// ,{"title":"地点四","type":"掘进"}
-// ,{"title":"地点六","type":"硐室"}
-// ,{"title":"地点七","type":"其他"}
-// ]
-// console.log(typelist);
 const typelist= new Array();
 const queryp = Bmob.Query("place");
-// query.equalTo("line","==", "A");
 queryp.find().then(res => {
-  // var typelist=res;
-    // const typelist= new Array();
       for(var i = 0 ; i < res.length ; i++){
     var Obj=new Object();
     Obj.title=res[i]["title"];
     Obj.type=res[i]["type"];
-    // Obj.time=res[i]["time"];
-    // Obj.line=res[i]["line"];
-    // Obj.value=res[i]["time"]+res[i]["title"];
     typelist.push(Obj);
   }
   console.log(typelist);
@@ -80,45 +60,19 @@ queryp.find().then(res => {
 
 
   form.on('submit(demo1)', function(data1){
-
-    // const queryp = Bmob.Query("place");
-    // // query.equalTo("line","==", "A");
-    // queryp.find().then(res => {
-    //   // var typelist=res;
-    //     const typelist= new Array();
-    //       for(var i = 0 ; i < res.length ; i++){
-    //     var Obj=new Object();
-    //     Obj.title=res[i]["title"];
-    //     Obj.type=res[i]["type"];
-    //     // Obj.time=res[i]["time"];
-    //     // Obj.line=res[i]["line"];
-    //     // Obj.value=res[i]["time"]+res[i]["title"];
-    //     typelist.push(Obj);
-    //   }
-    //   console.log(typelist)
-
-
     const query = Bmob.Query('TaskData');
     query.equalTo("Date","==", data1.field.date);
-    // query.statTo("groupby", "placename");
-    // query.equalTo("classtime","==", data1.field.class);
-    // query.include('time1','time2','time3');
     query.find().then(res => {
 
       const Array3= new Array();
       const Arrayplace= new Array();
-      // var x=1;
       for(var i = 0 ; i < res.length ; i++){
-        // var x=1;
 
         var place = Arrayplace.filter(function (data) {return data.placename == res[i]["placename"]});
         var tp=typelist.filter(function (data) {return data.title == res[i]["placename"]});
-        // console.log(tp)
+
         if(place.length<1){
-        // var place_CH4=new Object();
-        // place_CH4.placename=res[i]["placename"];
-        // place_CH4.CH4=res[i]["CH4"];
-        // Arrayplace.push(place_CH4);
+
 
         var Obj=new Object();
         Obj.placename=res[i]["placename"];
@@ -130,24 +84,12 @@ queryp.find().then(res => {
         Obj.time=res[i]["time"];
         Obj.tantou=res[i]["tantou"];
         Obj.fireboss=res[i]["fireboss"];
-        // Obj.loc=x;
-        // x=x+1;
         Arrayplace.push(Obj);
 continue;
       }
-      // console.log(parseFloat(place[0]["CH4"]));
-      // console.log(parseFloat(res[i]["CH4"]));
         if(parseFloat(place[0]["CH4"])<parseFloat(res[i]["CH4"])){
           console.log(parseFloat(place[0]["CH4"]));
           console.log(parseFloat(res[i]["CH4"]));
-          // Arrayplace.splice(place[0].loc,1);
-          // console.log(place[0]);
-          // Arrayplace.removeChild(place[0]);
-          // Array3.remove();
-          // var place_CH4=new Object();
-          // place_CH4.placename=res[i]["placename"];
-          // place_CH4.CH4=res[i]["CH4"];
-          // Arrayplace.push(place_CH4);
 
           var Obj=new Object();
           Obj.placename=res[i]["placename"];
@@ -164,39 +106,11 @@ continue;
             if(Arrayplace[id]["placename"]===res[i]["placename"])
           Arrayplace.splice(id,1);
         }
-          // x=x+1;
           Arrayplace.push(Obj);
-          // continue;
         }
-        // console.log(place)
-        // var thisCH4=place.filter(function (data) {return data.placename == });
-        //
-        // if(place.length<1){
-        // var place_CH4=new Object();
-        // place_CH4.placename=res[i]["placename"];
-        // place_CH4.CH4=res[i]["CH4"];
-        // Arrayplace.push(place_CH4);}
-        // console.log(Arrayplace)
-        // var queryData = Arrayplace.filter(function (data) {return data.place == place});
-        // if(queryData.length==0)
 
-
-        // var Obj=new Object();
-        // Obj.placename=res[i]["placename"];
-        // Obj.CH4=res[i]["CH4"];
-        // Obj.CO2=res[i]["CO2"];
-        // Obj.CO=res[i]["CO"];
-        // Obj.O2=res[i]["O2"];
-        // Obj.time=res[i]["time"];
-        // Obj.tantou=res[i]["tantou"];
-        // Obj.fireboss=res[i]["fireboss"];
-        // Array3.push(Obj);
       }
-console.log(Arrayplace)
-
-        // data=res;
         data=Arrayplace
-        // console.log(res)
         table.render({
           elem: '#test'
           ,url:'https://d1124.github.io/firstone/1.json'
@@ -229,12 +143,10 @@ console.log(Arrayplace)
           }
         });
       }).catch(err => {
-        // console.log(err)
+
       })
     return false;
   });
-
-// })
 });
 </script>
 </body>

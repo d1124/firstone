@@ -6,8 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <title>测试 - layui</title>
   <link rel="stylesheet" href="layui/css/layui.css">
-
-    <script src="jquery-1.12.4.js"></script>
 <script src="Bmob-2.2.5.min.js"></script>
 </head>
 <body>
@@ -35,6 +33,8 @@ layui.use('table', function(){
   ,form = layui.form
   ;
   Bmob.initialize("f1cdf3c708bde14d", "981124");
+    // Bmob.initialize("2ba7d49d6cd824c5", "981124");
+
 const query = Bmob.Query("Zan");
 query.order("-ID");
 query.find().then(res => {
@@ -62,8 +62,6 @@ query.find().then(res => {
         "msg": data.length, //解析提示文本
         "count": data.length, //解析数据长度
         "data": data //解析数据列表
-
-
       };
     }
   });
@@ -71,17 +69,18 @@ query.find().then(res => {
 
   form.on('submit(demo1)', function(data){
 
-const query = Bmob.Query('Zan');
-query.set("count",data.field.title)
-query.save().then(res => {
+const query1 = Bmob.Query('Zan');
+query1.set("count",data.field.title)
+query1.save().then(res => {
   console.log(res)
   location.reload();
 //window.location.replace("https://d1124.github.io/firstone/test.html")
 }).catch(err => {
   console.log(err)
 })
-  });
 
+return false;
+  });
 
 
 });
