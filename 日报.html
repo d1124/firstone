@@ -115,6 +115,7 @@ queryp.find().then(res => {
         var tp=typelist.filter(function (data) {return data.title == res[i]["placename"]});
         // console.log(tp)
         if(place.length<1){
+          console.log(res[i]["CH4"]);
         // var place_CH4=new Object();
         // place_CH4.placename=res[i]["placename"];
         // place_CH4.CH4=res[i]["CH4"];
@@ -124,6 +125,9 @@ queryp.find().then(res => {
         Obj.placename=res[i]["placename"];
         Obj.type=tp[0].type;
         Obj.CH4=res[i]["CH4"];
+        // if(isNaN(res[i]["CH4"]))Obj.CH4="0";
+if(res[i]["CH4"]==="")Obj.CH4="0";
+        // Obj.CH4=res[i]["CH4"];
         Obj.CO2=res[i]["CO2"];
         Obj.CO=res[i]["CO"];
         Obj.O2=res[i]["O2"];
@@ -132,12 +136,13 @@ queryp.find().then(res => {
         Obj.fireboss=res[i]["fireboss"];
         // Obj.loc=x;
         // x=x+1;
+        console.log(parseFloat(Obj["CH4"]));
         Arrayplace.push(Obj);
 continue;
       }
       // console.log(parseFloat(place[0]["CH4"]));
       // console.log(parseFloat(res[i]["CH4"]));
-        if(parseFloat(place[0]["CH4"])<parseFloat(res[i]["CH4"])){
+        if(parseFloat(Arrayplace[0]["CH4"])<parseFloat(res[i]["CH4"])){
           console.log(parseFloat(place[0]["CH4"]));
           console.log(parseFloat(res[i]["CH4"]));
           // Arrayplace.splice(place[0].loc,1);
@@ -152,7 +157,9 @@ continue;
           var Obj=new Object();
           Obj.placename=res[i]["placename"];
           Obj.type=tp[0].type;
-          Obj.CH4=res[i]["CH4"];
+          // Obj.CH4=res[i]["CH4"];
+          if(res[i]["CH4"]!=null)Obj.CH4=res[i]["CH4"];
+          else Obj.CH4="0";
           Obj.CO2=res[i]["CO2"];
           Obj.CO=res[i]["CO"];
           Obj.O2=res[i]["O2"];
