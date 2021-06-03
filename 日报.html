@@ -78,6 +78,7 @@ queryp.find().then(res => {
         Obj.placename=res[i]["placename"];
         Obj.type=tp[0].type;
         Obj.CH4=res[i]["CH4"];
+        if(res[i]["CH4"]==="")Obj.CH4="0";
         Obj.CO2=res[i]["CO2"];
         Obj.CO=res[i]["CO"];
         Obj.O2=res[i]["O2"];
@@ -87,9 +88,9 @@ queryp.find().then(res => {
         Arrayplace.push(Obj);
 continue;
       }
-        if(parseFloat(place[0]["CH4"])<parseFloat(res[i]["CH4"])){
-          console.log(parseFloat(place[0]["CH4"]));
-          console.log(parseFloat(res[i]["CH4"]));
+        if(parseFloat(Arrayplace[0]["CH4"])<parseFloat(res[i]["CH4"])){
+          // console.log(parseFloat(place[0]["CH4"]));
+          // console.log(parseFloat(res[i]["CH4"]));
 
           var Obj=new Object();
           Obj.placename=res[i]["placename"];
@@ -122,7 +123,7 @@ continue;
               ,{field:'type', title:'地点类型', sort: true}
                ,{field:'CH4',title:'CH4',edit: 'text', sort: true}
                ,{field:'CO2',title:'CO2',edit: 'text', sort: true}
-               ,{field:'CO',title:'CO',edit: 'text', sort: true}
+               // ,{field:'CO',title:'CO',edit: 'text', sort: true}
                ,{field:'T',title:'温度',edit: 'text', sort: true}
                ,{field:'tantou',title:'探头',edit: 'text', sort: true}
                ,{field:'time',title:'时间(h.min)',edit: 'text', sort: true}
