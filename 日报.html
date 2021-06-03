@@ -80,7 +80,7 @@ queryp.find().then(res => {
         Obj.CH4=res[i]["CH4"];
         if(res[i]["CH4"]==="")Obj.CH4="0";
         Obj.CO2=res[i]["CO2"];
-        Obj.CO=res[i]["CO"];
+        Obj.T=res[i]["T"];
         Obj.O2=res[i]["O2"];
         Obj.time=res[i]["time"];
         Obj.tantou=res[i]["tantou"];
@@ -97,7 +97,7 @@ continue;
           Obj.type=tp[0].type;
           Obj.CH4=res[i]["CH4"];
           Obj.CO2=res[i]["CO2"];
-          Obj.CO=res[i]["CO"];
+          Obj.T=res[i]["T"];
           Obj.O2=res[i]["O2"];
           Obj.time=res[i]["time"];
           Obj.tantou=res[i]["tantou"];
